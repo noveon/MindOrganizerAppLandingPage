@@ -3,42 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Datenschutzerklärung · MindOrganizer</title>
+  <title>MindOrganizer · Ordne Deine Gedanken</title>
   <style>
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif;line-height:1.6;margin:0;padding:0;background:#f8fafc;color:#111}
-    header{background:#0ea5e9;color:#fff;padding:2rem 1rem;text-align:center}
-    main{max-width:960px;margin:2rem auto;padding:0 1rem}
-    h1{font-size:2rem;margin:0}
-    h2{margin-top:2rem;color:#0ea5e9}
-    a{color:#0ea5e9;text-decoration:none}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif;margin:0;color:#111;background:#f0f4f8;line-height:1.6}
+    header{background:#0ea5e9;color:#fff;padding:4rem 1rem;text-align:center}
+    header h1{font-size:2.5rem;margin:0 0 1rem}
+    header p{font-size:1.25rem;margin:0 auto;max-width:600px}
+    nav{margin-top:2rem}
+    nav a{color:#fff;text-decoration:none;border:2px solid #fff;padding:.5rem 1rem;border-radius:8px;transition:.2s}
+    nav a:hover{background:#fff;color:#0ea5e9}
+    main{max-width:1040px;margin:3rem auto;padding:0 1rem}
+    section{margin-bottom:4rem;text-align:center}
+    h2{color:#0ea5e9;font-size:2rem}
+    .screens{display:grid;gap:1.5rem;margin-top:1.5rem}
+    @media(min-width:700px){.screens{grid-template-columns:repeat(3,1fr)}}
+    .placeholder{background:#e2e8f0;border-radius:20px;height:220px;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:1rem}
+    footer{background:#f8fafc;text-align:center;padding:2rem 1rem;font-size:.875rem;color:#64748b}
+    footer a{color:#0ea5e9;text-decoration:none}
   </style>
 </head>
 <body>
   <header>
-    <h1>MindOrganizer · Datenschutzerklärung</h1>
+    <h1>MindOrganizer</h1>
+    <p>Filtere deine Ideen – vom spontanen Gedanken bis zur erledigten Aufgabe.</p>
+    <nav>
+      <a href="https://apps.apple.com/app/id000000">Jetzt im App Store</a>
+    </nav>
   </header>
+
   <main>
-    <p>Stand: Mai 2025</p>
+    <section>
+      <h2>Warum MindOrganizer?</h2>
+      <p>Gedanken kommen oft ungelegen. Mit MindOrganizer parkst du sie blitzschnell, strukturierst später und wandelst sie in konkrete Taten um – alles in einer App.</p>
+      <div class="screens">
+        <div class="placeholder">Screenshot „Sammeln“</div>
+        <div class="placeholder">Screenshot „Recherche“</div>
+        <div class="placeholder">Screenshot „Aufgaben“</div>
+      </div>
+    </section>
 
-    <h2>1. Verantwortliche Stelle</h2>
-    <p>Max Mustermann<br />Musterstraße 1<br />12345 Musterstadt<br />E-Mail: privacy@example.com</p>
+    <section>
+      <h2>Features</h2>
+      <ul style="text-align:left;max-width:600px;margin:0 auto;font-size:1.1rem;">
+        <li>🚀 Blitzschnelles Gedanken‑Capture</li>
+        <li>➡️ Wisch‑Workflow durch fünf Phasen</li>
+        <li>🔍 Globale Suche über alle Listen</li>
+        <li>☁️ Optionale iCloud‑Synchronisation</li>
+        <li>🔔 Haptisches Feedback & Animationen</li>
+      </ul>
+    </section>
 
-    <h2>2. Lokale Speicherung</h2>
-    <p>Alle von Ihnen eingegebenen Gedanken und Notizen werden standardmäßig ausschließlich <strong>lokal</strong> auf Ihrem Gerät gesichert. Es erfolgt <strong>keine Übermittlung</strong> an Dritte.</p>
-
-    <h2>3. Optionale iCloud-Synchronisation</h2>
-    <p>Wenn Sie die iCloud-Sync-Option aktivieren, werden Ihre Daten verschlüsselt in Ihrer privaten iCloud-Datenbank (CloudKit) gespeichert. Der Datentransfer erfolgt Ende-zu-Ende-verschlüsselt. Apple Inc. agiert hierbei als Auftragsverarbeiter.</p>
-
-    <h2>4. Analysedaten</h2>
-    <p>MindOrganizer nutzt <strong>kein Drittanbieter-Tracking</strong>. Zur Fehlerdiagnose können anonyme Crash-Logs via Apple Crash Reporter übertragen werden.</p>
-
-    <h2>5. Ihre Rechte</h2>
-    <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. Kontaktieren Sie uns hierfür unter <a href="mailto:privacy@example.com">privacy@example.com</a>.</p>
-
-    <h2>6. Änderungen</h2>
-    <p>Diese Datenschutzerklärung wird bei Bedarf aktualisiert. Die jeweils aktuelle Fassung finden Sie stets auf dieser Seite.</p>
-
-    <p><a href="index.html">Zurück zur Startseite</a></p>
+    <section>
+      <h2>Demnächst</h2>
+      <p>Statistiken, Tags, Drag‑&‑Drop Sortierung und mehr.</p>
+    </section>
   </main>
+
+  <footer>
+    <p>&copy; 2025 MindOrganizer · <a href="privacy.html">Datenschutzerklärung</a></p>
+  </footer>
 </body>
 </html>
