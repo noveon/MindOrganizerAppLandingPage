@@ -3,205 +3,173 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MindOrganizer – Schnelle, schöne Sammlungen für deine Gedanken</title>
-
-  <!-- Meta / SEO -->
-  <meta name="description" content="MindOrganizer: Die schnelle, schöne Art, Gedanken festzuhalten und in flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung." />
-  <link rel="canonical" href="https://example.com/" />
+  <title>MindOrganizer – Ordne deine Gedanken</title>
+  <meta name="description" content="Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung." />
   <meta name="theme-color" content="#0ea5e9" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="MindOrganizer – Ordne deine Gedanken" />
-  <meta property="og:description" content="Ob Idee, Fundstück oder Moment: MindOrganizer macht aus Eingebungen verwertbare Erkenntnisse – Text, Fotos, Links, Sprachnotizen." />
-  <meta property="og:image" content="social-preview.png" />
-  <meta property="og:locale" content="de_DE" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MindOrganizer – Ordne deine Gedanken" />
-  <meta name="twitter:description" content="Schnell erfassen. Stressfrei strukturieren. Schön benutzen. Privat auf deinem Gerät." />
-  <meta name="twitter:image" content="social-preview.png" />
-
-  <!-- Icons -->
   <link rel="icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
-  <!-- Schema.org -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"MobileApplication",
-    "name":"MindOrganizer",
-    "applicationCategory":"ProductivityApplication",
-    "operatingSystem":"iOS",
-    "url":"https://example.com",
-    "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},
-    "description":"Schnell erfassen. Stressfrei strukturieren. Schön benutzen. Privat auf deinem Gerät."
-  }
-  </script>
-
   <style>
+    /* ---- Design Tokens ---- */
     :root{
-      --bg:#0b1220;           /* Base: dunkler, moderner Look – Hellmodus via prefers-color-scheme */
-      --card:#0f172a;
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --brand:#38bdf8;
-      --brand-600:#0ea5e9;
-      --ring:#164e63;
-      --ok: #34d399;
-      --warn: #fb923c;
+      --bg: #0c1220;         /* dunkler Grund (Dark-First); Light-Mode unten */
+      --surface: #0f172a;
+      --muted-surface: #111a2f;
+      --text: #e7eaf0;
+      --muted: #9aa4b2;
+      --brand: #38bdf8;
+      --brand-700:#0ea5e9;
+      --border: #203048;
+      --shadow: 0 6px 20px rgba(0,0,0,.25);
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --container: 1120px;
+      --focus: 2px solid #38bdf8;
     }
     @media (prefers-color-scheme: light){
       :root{
-        --bg:#f1f5f9;
-        --card:#ffffff;
-        --text:#111827;
-        --muted:#64748b;
+        --bg:#f4f7fb;
+        --surface:#ffffff;
+        --muted-surface:#f7f9fc;
+        --text:#0f172a;
+        --muted:#667085;
         --brand:#0ea5e9;
-        --brand-600:#0284c7;
-        --ring:#bae6fd;
-        --ok:#059669;
-        --warn:#ea580c;
+        --brand-700:#0284c7;
+        --border:#dde6f2;
+        --shadow: 0 4px 18px rgba(2, 84, 119, .10);
+        --focus: 2px solid #0ea5e9;
       }
     }
+
+    /* ---- Base ---- */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Inter, system-ui, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color:var(--text);
       background:
-        radial-gradient(1200px 600px at 50% -10%, rgba(56,189,248,.25), transparent 60%),
-        linear-gradient(180deg, rgba(2,132,199,.15), transparent 30%),
+        radial-gradient(900px 360px at 50% -10%, rgba(56,189,248,.18), transparent 60%),
+        linear-gradient(180deg, rgba(14,165,233,.10), transparent 35%),
         var(--bg);
       line-height:1.6;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
     a{color:var(--brand);text-decoration:none}
-    .container{max-width:1120px;margin-inline:auto;padding:0 1rem}
+    img{max-width:100%;height:auto;display:block}
+    .container{max-width:var(--container);margin-inline:auto;padding:0 1rem}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-    /* Header / Hero */
+    /* ---- Header / Hero ---- */
     header{
-      padding:4.5rem 0 3rem;
+      padding:3.5rem 0 2.5rem;
       background:
-        radial-gradient(1000px 400px at 50% -20%, rgba(56,189,248,.25), transparent 70%);
+        radial-gradient(1000px 420px at 50% -24%, rgba(56,189,248,.22), transparent 70%);
     }
-    nav[aria-label="Hauptnavigation"]{display:flex;justify-content:flex-end;gap:.75rem;margin-bottom:1rem}
-    .badge{
+    .topbar{display:flex;justify-content:flex-end}
+    .chip{
       display:inline-flex;align-items:center;gap:.5rem;
-      border:1px solid color-mix(in oklab, var(--ring), transparent 55%);
-      color:var(--muted);
-      padding:.35rem .6rem;border-radius:999px;font-size:.85rem
+      padding:.35rem .6rem;border:1px solid var(--border);border-radius:999px;
+      background:var(--muted-surface);color:var(--muted);font-size:.85rem
     }
-    .hero{
-      text-align:center;
-      display:grid;gap:1rem;justify-items:center
-    }
-    .hero h1{font-size:clamp(2rem,5vw,3.25rem);margin:.25rem 0}
-    .lead{max-width:780px;color:var(--muted);font-size:1.125rem;margin:0 auto}
-    .cta{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:1.25rem}
+    .hero{margin-top:.75rem;text-align:center}
+    .hero h1{font-size:clamp(2rem,5vw,3rem);margin:.25rem 0 .5rem}
+    .lead{max-width:760px;margin:0 auto 1.1rem;color:var(--muted);font-size:1.125rem}
+    .cta{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
+
     .btn{
       display:inline-flex;align-items:center;gap:.5rem;
-      padding:.85rem 1.1rem;border-radius:14px;border:1.5px solid transparent;
-      background:var(--brand);color:#001018;font-weight:700;
-      box-shadow:0 10px 30px rgba(56,189,248,.35);
-      transition:.2s transform, .2s box-shadow, .2s background-color, .2s border-color;
+      padding:.9rem 1.1rem;border-radius:14px;border:1.5px solid transparent;
+      background:var(--brand);color:#07131a;font-weight:700;
+      box-shadow:var(--shadow);transition:.2s transform, .2s box-shadow, .2s background-color;
     }
-    .btn:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(56,189,248,.45)}
-    .btn.ghost{background:transparent;color:var(--brand);border-color:color-mix(in oklab, var(--ring), transparent 20%);box-shadow:none}
-    .btn.subtle{background:transparent;color:var(--text);border-color:color-mix(in oklab, var(--ring), transparent 50%)}
+    .btn:hover{transform:translateY(-1px)}
+    .btn:focus-visible{outline:var(--focus);outline-offset:2px}
+    .btn.ghost{background:transparent;color:var(--brand);border-color:var(--border);box-shadow:none}
+    .btn.subtle{background:transparent;color:var(--text);border-color:var(--border);box-shadow:none}
 
-    /* Device mockups */
-    .screens{display:grid;gap:1rem;margin-top:2rem}
-    @media (min-width: 760px){.screens{grid-template-columns:repeat(3,1fr)}}
+    /* Device placeholders – dezenter & konsistent */
+    .screens{display:grid;gap:1rem;margin-top:1.6rem}
+    @media (min-width:760px){.screens{grid-template-columns:repeat(3,1fr)}}
     .phone{
-      background:var(--card);border:1px solid color-mix(in oklab, var(--ring), transparent 40%);border-radius:28px;
-      padding:14px;position:relative;height:420px;box-shadow:0 12px 40px rgba(0,0,0,.25);
+      background:var(--surface);border:1px solid var(--border);border-radius:28px;
+      padding:12px;position:relative;height:420px;box-shadow:var(--shadow)
     }
     .phone::before{
       content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);
-      width:34%;height:6px;background:color-mix(in oklab, var(--ring), transparent 30%);border-radius:10px;
+      width:34%;height:6px;background:#2a3a53;border-radius:10px;opacity:.6
     }
     .screen{
-      border-radius:22px;height:100%;display:flex;align-items:center;justify-content:center;
-      background:
-        linear-gradient(180deg, color-mix(in oklab, var(--card), transparent 0%), color-mix(in oklab, var(--bg), transparent 20%)),
-        repeating-linear-gradient(135deg, rgba(148,163,184,.15) 0 12px, transparent 12px 24px);
+      border-radius:20px;height:100%;
+      display:grid;place-items:center;
+      background:linear-gradient(180deg, var(--muted-surface), transparent 90%);
       color:var(--muted);font-weight:600
     }
 
-    /* Sections */
-    section{padding:3rem 0}
-    .section-head{display:grid;gap:.35rem;text-align:center;margin-bottom:1.25rem}
-    .section-head h2{font-size:1.8rem;margin:0}
-    .sub{color:var(--muted);margin:0 auto;max-width:760px}
+    /* ---- Sections ---- */
+    main{padding:1.5rem 0 3rem}
+    section{padding:2.5rem 0;border-top:1px solid var(--border)}
+    section:first-of-type{border-top:none}
+    .section-head{margin:0 0 1.25rem}
+    .kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}
+    h2{font-size:1.75rem;margin:.15rem 0}
+    .sub{color:var(--muted);max-width:760px}
 
+    /* Layout: linksbündig für bessere Lesbarkeit */
+    .stack{display:grid;gap:1rem}
+    @media (min-width:900px){.stack{grid-template-columns:1.1fr 1fr;align-items:start}}
     .grid{display:grid;gap:1rem}
-    .grid.cols-2{@media (min-width:760px){grid-template-columns:repeat(2,1fr)}}
-    .grid.cols-3{@media (min-width:900px){grid-template-columns:repeat(3,1fr)}}
+    @media (min-width:760px){.grid.cols-2{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width:900px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+    @media (min-width:1040px){.grid.cols-4{grid-template-columns:repeat(4,1fr)}}
+
     .card{
-      background:var(--card);
-      border:1px solid color-mix(in oklab, var(--ring), transparent 50%);
-      border-radius:18px;padding:1.1rem 1.1rem 1rem;
-      box-shadow:0 8px 28px rgba(0,0,0,.15);
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius-lg);
+      padding:1rem 1.1rem;
+      box-shadow:var(--shadow)
     }
-    .kicker{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-    .items{list-style:none;padding:0;margin:0;display:grid;gap:.75rem}
-    .items li{
-      display:grid;grid-template-columns:auto 1fr;gap:.75rem;align-items:start
-    }
+
+    .items{list-style:none;margin:0;padding:0;display:grid;gap:.75rem}
+    .items li{display:grid;grid-template-columns:auto 1fr;gap:.75rem;align-items:start}
     .icon{
-      width:28px;height:28px;border-radius:8px;display:inline-grid;place-items:center;
-      background:linear-gradient(180deg, color-mix(in oklab, var(--brand), transparent 0%), color-mix(in oklab, var(--brand-600), transparent 20%));
-      color:#001018;font-weight:900;
-      box-shadow:0 6px 18px rgba(56,189,248,.35);
+      width:28px;height:28px;border-radius:10px;display:grid;place-items:center;
+      background:linear-gradient(180deg, var(--brand), var(--brand-700));
+      color:#001018;font-weight:900
     }
 
-    /* FAQ / Footer */
-    .faq dt{font-weight:700;margin-top:1rem}
-    .faq dd{margin:.25rem 0 0 0;color:var(--muted)}
-    footer{
-      border-top:1px solid color-mix(in oklab, var(--ring), transparent 60%);
-      background:linear-gradient(180deg, transparent, color-mix(in oklab, var(--card), transparent 0%) 40%);
-      margin-top:2rem
-    }
-    footer .inner{display:grid;gap:1rem;justify-items:center;padding:2rem 1rem;color:var(--muted)}
-
-    /* Forms */
-    form{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+    /* ---- Form ---- */
+    form{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-top:.5rem}
     input[type="email"]{
-      background:var(--card);color:var(--text);border:1px solid color-mix(in oklab, var(--ring), transparent 40%);
-      border-radius:12px;padding:.9rem 1rem;min-width:260px
+      background:var(--surface);color:var(--text);
+      border:1px solid var(--border);border-radius:12px;
+      padding:.9rem 1rem;min-width:260px
     }
+    input[type="email"]::placeholder{color:var(--muted)}
+    input[type="email"]:focus-visible{outline:var(--focus);outline-offset:2px}
 
-    /* Motion friendly */
-    @media (prefers-reduced-motion: reduce){
-      .btn,.btn:hover{transition:none;transform:none;box-shadow:none}
-    }
+    /* ---- Footer ---- */
+    footer{border-top:1px solid var(--border);padding:2rem 0;background:var(--muted-surface)}
+    footer .inner{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;color:var(--muted)}
   </style>
 </head>
 <body>
   <header>
     <div class="container">
-      <nav aria-label="Hauptnavigation">
-        <span class="badge" role="status" aria-live="polite">Bald im App Store</span>
-      </nav>
+      <div class="topbar"><span class="chip">Bald im App Store</span></div>
       <div class="hero">
-        <div class="badge">Produktivität</div>
+        <div class="chip" aria-hidden="true">Produktivität</div>
         <h1>MindOrganizer</h1>
-        <p class="lead">
-          Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung.
-        </p>
+        <p class="lead">Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung.</p>
         <div class="cta" role="group" aria-label="Aktionen">
           <a class="btn" href="#waitlist">Werde benachrichtigt</a>
           <a class="btn ghost" href="#discover">Mehr entdecken</a>
           <a class="btn subtle" href="#early">Early Access sichern</a>
         </div>
 
+        <!-- Dezentere Device-Platzhalter -->
         <div class="screens" aria-label="App-Screenshots (Platzhalter)">
           <div class="phone"><div class="screen" aria-label="Sammeln">Sammeln</div></div>
           <div class="phone"><div class="screen" aria-label="Sammlungen">Sammlungen</div></div>
@@ -214,97 +182,102 @@
   <main class="container">
     <!-- Elevator Pitch -->
     <section id="discover" aria-labelledby="pitch">
-      <div class="section-head">
-        <span class="kicker">Elevator Pitch</span>
-        <h2 id="pitch">Eingebung → Erkenntnis</h2>
-        <p class="sub">Ob Idee, Fundstück oder Moment: MindOrganizer macht aus Eingebungen verwertbare Erkenntnisse. Text, Fotos, Links und Sprachnotizen fügen sich zu einer leicht navigierbaren Sammlung zusammen – ästhetisch, fokussiert, blitzschnell.</p>
-      </div>
-      <div class="grid cols-3">
+      <div class="stack">
+        <div>
+          <div class="section-head">
+            <div class="kicker">Elevator&nbsp;Pitch</div>
+            <h2 id="pitch">Eingebung → Erkenntnis</h2>
+            <p class="sub">Ob Idee, Fundstück oder Moment: MindOrganizer macht aus Eingebungen verwertbare Erkenntnisse. Text, Fotos, Links und Sprachnotizen fügen sich zu einer leicht navigierbaren Sammlung zusammen – ästhetisch, fokussiert, blitzschnell.</p>
+          </div>
+        </div>
         <div class="card">
-          <div class="kicker">Kernversprechen</div>
           <ul class="items">
-            <li><span class="icon">⚡</span><div><strong>Erfassen in Sekunden</strong><br />Tippen, sprechen, fotografieren – fertig.</div></li>
-            <li><span class="icon">🧱</span><div><strong>Struktur ohne Stress</strong><br />Inhalte ordnen sich in übersichtlichen Bausteinen.</div></li>
-            <li><span class="icon">🎯</span><div><strong>Fokus statt Featuresalat</strong><br />Das Wesentliche steht im Vordergrund.</div></li>
+            <li><span class="icon">⚡</span><div><strong>Erfassen in Sekunden</strong><br/>Tippen, sprechen, fotografieren – fertig.</div></li>
+            <li><span class="icon">🧱</span><div><strong>Struktur ohne Stress</strong><br/>Übersichtliche Bausteine statt Chaos.</div></li>
+            <li><span class="icon">🎯</span><div><strong>Fokus statt Featuresalat</strong><br/>Das Wesentliche steht im Vordergrund.</div></li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <!-- Design / Privacy (aus PDF-Inhalten) -->
+    <section aria-labelledby="design">
+      <div class="grid cols-2">
         <div class="card">
           <div class="kicker">Design & Erlebnis</div>
           <ul class="items">
-            <li><span class="icon">✨</span><div><strong>Sieht gut, fühlt sich gut an</strong><br />Modernes iOS-Design mit flüssigen Interaktionen.</div></li>
-            <li><span class="icon">🍏</span><div><strong>iOS-nativ</strong><br />Für die neueste iOS-Generation – schnell, responsiv, zugänglich.</div></li>
-            <li><span class="icon">🔕</span><div><strong>Ohne Ablenkung</strong><br />Klarer Look, dezente Animationen, natürliche Bedienung.</div></li>
+            <li><span class="icon">✨</span><div><strong>Sieht gut, fühlt sich gut an</strong><br/>Modernes iOS-Design mit flüssigen Interaktionen.</div></li>
+            <li><span class="icon">🍏</span><div><strong>iOS-nativ</strong><br/>Schnell, responsiv, zugänglich.</div></li>
+            <li><span class="icon">🔕</span><div><strong>Ohne Ablenkung</strong><br/>Klarer Look, dezente Animationen, natürliche Bedienung.</div></li>
           </ul>
         </div>
         <div class="card">
           <div class="kicker">Privatsphäre</div>
           <ul class="items">
-            <li><span class="icon">🔐</span><div><strong>Privat standardmäßig</strong><br />Verarbeitung direkt auf dem Gerät.</div></li>
-            <li><span class="icon">☁️</span><div><strong>Deine Wahl</strong><br />Optionale iCloud-Synchronisation – kein Zwang, keine Tracker.</div></li>
-            <li><span class="icon">✅</span><div><strong>Exportfähig</strong><br />Teilen/Export (z. B. Text/Markdown), wo verfügbar.</div></li>
+            <li><span class="icon">🔐</span><div><strong>Privat zuerst</strong><br/>Verarbeitung direkt auf dem Gerät.</div></li>
+            <li><span class="icon">☁️</span><div><strong>Deine Wahl</strong><br/>Optionale iCloud-Synchronisation – keine Tracker.</div></li>
+            <li><span class="icon">✅</span><div><strong>Exportfähig</strong><br/>Teilen/Export (z. B. Text/Markdown), wo verfügbar.</div></li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- Was man damit macht -->
+    <!-- Use cases -->
     <section aria-labelledby="use">
       <div class="section-head">
-        <span class="kicker">Anwendungsfälle</span>
+        <div class="kicker">Anwendungsfälle</div>
         <h2 id="use">Was du damit machst</h2>
         <p class="sub">Sammle zuerst, ordne später – ohne Kontextwechsel.</p>
       </div>
-      <div class="grid cols-4" style="--cols:4;display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
-        <div class="card"><strong>Ideen & Brainstorms</strong><br /><span class="muted">Gedanken festhalten, weiterdenken</span></div>
-        <div class="card"><strong>Recherche-Sammlungen</strong><br /><span class="muted">Artikel, Notizen, Bilder kuratieren</span></div>
-        <div class="card"><strong>Projekt-Planung</strong><br /><span class="muted">To-Dos, Quellen, Referenzen bündeln</span></div>
-        <div class="card"><strong>Inspirationen & Erinnerungen</strong><br /><span class="muted">Fotos & Sprachmemos bewahren</span></div>
+      <div class="grid cols-4">
+        <div class="card"><strong>Ideen & Brainstorms</strong><br/><span class="sub">Gedanken festhalten, weiterdenken</span></div>
+        <div class="card"><strong>Recherche-Sammlungen</strong><br/><span class="sub">Artikel, Notizen, Bilder kuratieren</span></div>
+        <div class="card"><strong>Projekt-Planung</strong><br/><span class="sub">To-Dos, Quellen, Referenzen bündeln</span></div>
+        <div class="card"><strong>Inspirationen & Erinnerungen</strong><br/><span class="sub">Fotos & Sprachmemos bewahren</span></div>
       </div>
     </section>
 
-    <!-- Hauptfunktionen -->
+    <!-- Features -->
     <section aria-labelledby="features">
       <div class="section-head">
-        <span class="kicker">Funktionen</span>
+        <div class="kicker">Funktionen</div>
         <h2 id="features">Hauptfunktionen</h2>
-        <p class="sub">Alles Wichtige – ohne Ballast.</p>
       </div>
       <div class="grid cols-2">
         <div class="card">
           <ul class="items">
-            <li><span class="icon">🧩</span><div><strong>Erfassen in Blöcken</strong><br />Text, Fotos (Kamera/Album), Links, Sprachnotizen; Skizzen folgen.</div></li>
-            <li><span class="icon">🗂️</span><div><strong>Alles an einem Ort</strong><br />Sammlungen bleiben übersichtlich und schnell zugänglich.</div></li>
-            <li><span class="icon">🎛️</span><div><strong>Reibungslos & schön</strong><br />Klarer Look, dezente Animationen, natürliche Gesten.</div></li>
+            <li><span class="icon">🧩</span><div><strong>Erfassen in Blöcken</strong><br/>Text, Fotos (Kamera/Album), Links, Sprachnotizen; Skizzen folgen.</div></li>
+            <li><span class="icon">🗂️</span><div><strong>Alles an einem Ort</strong><br/>Sammlungen bleiben übersichtlich und schnell zugänglich.</div></li>
+            <li><span class="icon">🎛️</span><div><strong>Reibungslos & schön</strong><br/>Klarer Look, dezente Animationen, natürliche Gesten.</div></li>
           </ul>
         </div>
         <div class="card">
           <ul class="items">
-            <li><span class="icon">🍎</span><div><strong>iOS-nativ</strong><br />Neueste iOS-Generation, Barrierefreiheit inklusive.</div></li>
-            <li><span class="icon">🔍</span><div><strong>Globale Suche</strong><br />Finde Einträge über alle Sammlungen hinweg.</div></li>
-            <li><span class="icon">☁️</span><div><strong>Optionaler Sync</strong><br />iCloud, wenn du möchtest – lokal funktioniert alles.</div></li>
+            <li><span class="icon">🍎</span><div><strong>iOS-nativ</strong><br/>Barrierefreiheit inklusive.</div></li>
+            <li><span class="icon">🔍</span><div><strong>Globale Suche</strong><br/>Finde Einträge über alle Sammlungen hinweg.</div></li>
+            <li><span class="icon">☁️</span><div><strong>Optionaler Sync</strong><br/>iCloud, wenn du möchtest – lokal funktioniert alles.</div></li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- Für wen -->
+    <!-- Audience -->
     <section aria-labelledby="audience">
       <div class="section-head">
-        <span class="kicker">Zielgruppen</span>
+        <div class="kicker">Zielgruppen</div>
         <h2 id="audience">Für wen?</h2>
-        <p class="sub">Kreative, Forschende, Produktmenschen, Studierende – alle, die Ideen schnell erfassen und sinnvoll ordnen möchten.</p>
       </div>
       <div class="grid cols-3">
-        <div class="card"><strong>Kreativ & Content</strong><br /><span class="muted">Ideen, Skripte, Moodboards</span></div>
-        <div class="card"><strong>Research & Studium</strong><br /><span class="muted">Quellen, Notizen, Paper-Auszüge</span></div>
-        <div class="card"><strong>Produkt & Projekte</strong><br /><span class="muted">To-Dos, Roadmaps, Referenzen</span></div>
+        <div class="card"><strong>Kreativ & Content</strong><br/><span class="sub">Ideen, Skripte, Moodboards</span></div>
+        <div class="card"><strong>Research & Studium</strong><br/><span class="sub">Quellen, Notizen, Paper-Auszüge</span></div>
+        <div class="card"><strong>Produkt & Projekte</strong><br/><span class="sub">To-Dos, Roadmaps, Referenzen</span></div>
       </div>
     </section>
 
     <!-- Waitlist -->
     <section id="waitlist" aria-labelledby="cta">
       <div class="section-head">
-        <span class="kicker">Benachrichtigung</span>
+        <div class="kicker">Benachrichtigung</div>
         <h2 id="cta">Bald im App Store – werde benachrichtigt</h2>
         <p class="sub">Trag deine E-Mail ein und erfahre als Erste·r, wenn MindOrganizer verfügbar ist.</p>
       </div>
@@ -314,22 +287,21 @@
         <button class="btn" type="submit">Benachrichtigen</button>
         <a class="btn ghost" href="mailto:support@example.com?subject=MindOrganizer%20Early%20Access">Kontakt</a>
       </form>
-      <p class="sub" style="text-align:center;margin-top:.75rem">Kein Spam. Abmeldung jederzeit möglich.</p>
+      <p class="sub">Kein Spam. Abmeldung jederzeit möglich.</p>
     </section>
 
     <!-- Early Access -->
     <section id="early" aria-labelledby="early-access">
       <div class="section-head">
-        <span class="kicker">Frühstarter·innen</span>
+        <div class="kicker">Frühstarter·innen</div>
         <h2 id="early-access">Early Access sichern</h2>
-        <p class="sub">Teste neue Funktionen vorab und hilf, die App zu schärfen.</p>
       </div>
       <div class="grid cols-3">
-        <div class="card"><span class="icon">🧪</span> Zugang zu Beta-Builds</div>
-        <div class="card"><span class="icon">🗣️</span> Direktes Feedback-Loop</div>
-        <div class="card"><span class="icon">🎁</span> Dankeschön im Release-Notes-Credits</div>
+        <div class="card"><span class="icon">🧪</span>&nbsp;Zugang zu Beta-Builds</div>
+        <div class="card"><span class="icon">🗣️</span>&nbsp;Direktes Feedback-Loop</div>
+        <div class="card"><span class="icon">🎁</span>&nbsp;Dankeschön im Release-Notes-Credits</div>
       </div>
-      <div class="cta" style="margin-top:1rem">
+      <div class="cta" style="justify-content:flex-start">
         <a class="btn" href="#waitlist">Jetzt vormerken</a>
         <a class="btn ghost" href="https://apps.apple.com/app/id000000" rel="noopener">Später im App Store</a>
       </div>
@@ -338,24 +310,21 @@
     <!-- FAQ -->
     <section aria-labelledby="faq">
       <div class="section-head">
-        <span class="kicker">Fragen</span>
+        <div class="kicker">Fragen</div>
         <h2 id="faq">Häufige Fragen</h2>
       </div>
-      <dl class="faq">
-        <dt>Benötige ich iCloud?</dt>
-        <dd>Nein. Alles läuft lokal. iCloud-Sync ist optional.</dd>
-        <dt>Gibt es Export-Möglichkeiten?</dt>
-        <dd>Ja. Inhalte lassen sich teilen/exportieren (z. B. Text/Markdown), wo verfügbar.</dd>
-        <dt>Welche iOS-Version wird unterstützt?</dt>
-        <dd>Aktuelle iOS-Versionen – Details folgen im App-Store-Eintrag.</dd>
-      </dl>
+      <div class="grid cols-3">
+        <div class="card"><strong>Benötige ich iCloud?</strong><br/>Nein. Alles läuft lokal. iCloud-Sync ist optional.</div>
+        <div class="card"><strong>Gibt es Export-Möglichkeiten?</strong><br/>Ja. Inhalte lassen sich teilen/exportieren (z. B. Text/Markdown), wo verfügbar.</div>
+        <div class="card"><strong>Welche iOS-Version wird unterstützt?</strong><br/>Aktuelle iOS-Versionen – Details folgen im App-Store-Eintrag.</div>
+      </div>
     </section>
   </main>
 
   <footer>
     <div class="container inner">
-      <div>&copy; 2025 MindOrganizer</div>
-      <div><a href="privacy.html">Datenschutzerklärung</a> · <a href="mailto:support@example.com">Support</a></div>
+      <span>&copy; 2025 MindOrganizer</span>
+      <span><a href="privacy.html">Datenschutzerklärung</a> · <a href="mailto:support@example.com">Support</a></span>
     </div>
   </footer>
 </body>
