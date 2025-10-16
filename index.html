@@ -116,4 +116,180 @@
 
     .grid{display:grid; gap:1rem}
     @media (min-width:760px){ .cols-2{grid-template-columns:repeat(2,1fr)} }
-    @media (min-width:960px){ .cols-3{grid-template-columns:repeat(3,1f
+    @media (min-width:960px){ .cols-3{grid-template-columns:repeat(3,1fr)} }
+    @media (min-width:1100px){ .cols-4{grid-template-columns:repeat(4,1fr)} }
+
+    .card{
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+      padding:1rem 1.1rem; box-shadow:var(--shadow);
+    }
+
+    /* Konsistente Icon-Badges (CSS, keine Emojis) */
+    .items{list-style:none; margin:0; padding:0; display:grid; gap:.75rem}
+    .items li{display:grid; grid-template-columns:auto 1fr; gap:.75rem; align-items:start}
+    .icon{
+      width:26px; height:26px; border-radius:8px; display:grid; place-items:center; position:relative;
+      background: linear-gradient(135deg, var(--brand), var(--brand-600));
+      box-shadow: 0 6px 16px rgba(14,165,233,.35);
+    }
+    .icon::after{
+      content:""; width:10px; height:10px; border-radius:3px; background:#001018;
+    }
+
+    /* Formular */
+    form{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin-top:.5rem}
+    input[type="email"]{
+      background:var(--surface); color:var(--text); border:1px solid var(--border);
+      border-radius:12px; padding:.9rem 1rem; min-width:260px;
+    }
+    input[type="email"]::placeholder{color:var(--muted)}
+    input[type="email"]:focus-visible{outline:var(--focus); outline-offset:2px}
+
+    /* Footer */
+    footer{border-top:1px solid var(--border); background:var(--surface); padding:24px 0}
+    footer .inner{display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="top">
+        <div class="logo">
+          <span class="logo-badge" aria-hidden="true"></span>
+          <span>MindOrganizer</span>
+        </div>
+        <span class="chip">Bald im App Store</span>
+      </div>
+
+      <div class="hero">
+        <div>
+          <div class="chip" aria-hidden="true">Produktivität</div>
+          <h1>Ordne deine Gedanken</h1>
+          <p class="lead">Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung.</p>
+          <div class="cta" role="group" aria-label="Aktionen">
+            <a class="btn" href="#waitlist">Werde benachrichtigt</a>
+            <a class="btn ghost" href="#discover">Mehr entdecken</a>
+            <a class="btn subtle" href="#early">Early Access sichern</a>
+          </div>
+        </div>
+
+        <!-- cleane, moderne Shots -->
+        <div class="shots" aria-label="App-Screens (Platzhalter)">
+          <div class="shot" aria-label="Sammeln">Sammeln</div>
+          <div class="shot" aria-label="Sammlungen">Sammlungen</div>
+          <div class="shot" aria-label="Aufgaben">Aufgaben</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Elevator Pitch -->
+    <section id="discover" aria-labelledby="pitch">
+      <div class="kicker">Elevator Pitch</div>
+      <h2 id="pitch">Eingebung → Erkenntnis</h2>
+      <p class="sub">Ob Idee, Fundstück oder Moment: MindOrganizer macht aus Eingebungen verwertbare Erkenntnisse. Text, Fotos, Links und Sprachnotizen fügen sich zu einer leicht navigierbaren Sammlung zusammen – ästhetisch, fokussiert, blitzschnell.</p>
+
+      <div class="grid cols-3" style="margin-top:1rem">
+        <div class="card">
+          <ul class="items">
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Erfassen in Sekunden</strong><br/>Tippen, sprechen, fotografieren – fertig.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Struktur ohne Stress</strong><br/>Übersichtliche Bausteine statt Chaos.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Fokus statt Featuresalat</strong><br/>Das Wesentliche steht im Vordergrund.</div></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="kicker">Design & Erlebnis</div>
+          <ul class="items">
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Sieht gut, fühlt sich gut an</strong><br/>Modernes iOS-Design mit flüssigen Interaktionen.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>iOS-nativ</strong><br/>Schnell, responsiv, zugänglich.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Ohne Ablenkung</strong><br/>Klarer Look, dezente Animationen, natürliche Gesten.</div></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="kicker">Privatsphäre</div>
+          <ul class="items">
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Privat zuerst</strong><br/>Verarbeitung direkt auf dem Gerät.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Deine Wahl</strong><br/>Optionale iCloud-Synchronisation – keine Tracker.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Exportfähig</strong><br/>Teilen/Export (z. B. Text/Markdown), wo verfügbar.</div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use-Cases -->
+    <section aria-labelledby="use">
+      <div class="kicker">Anwendungsfälle</div>
+      <h2 id="use">Was du damit machst</h2>
+      <p class="sub">Sammle zuerst, ordne später – ohne Kontextwechsel.</p>
+      <div class="grid cols-4" style="margin-top:1rem">
+        <div class="card"><strong>Ideen & Brainstorms</strong><br/><span class="sub">Gedanken festhalten, weiterdenken</span></div>
+        <div class="card"><strong>Recherche-Sammlungen</strong><br/><span class="sub">Artikel, Notizen, Bilder kuratieren</span></div>
+        <div class="card"><strong>Projekt-Planung</strong><br/><span class="sub">To-Dos, Quellen, Referenzen bündeln</span></div>
+        <div class="card"><strong>Inspiration & Erinnerungen</strong><br/><span class="sub">Fotos & Sprachmemos bewahren</span></div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section aria-labelledby="features">
+      <div class="kicker">Funktionen</div>
+      <h2 id="features">Hauptfunktionen</h2>
+      <div class="grid cols-2" style="margin-top:1rem">
+        <div class="card">
+          <ul class="items">
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Erfassen in Blöcken</strong><br/>Text, Fotos (Kamera/Album), Links, Sprachnotizen; Skizzen folgen.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Alles an einem Ort</strong><br/>Sammlungen bleiben übersichtlich und schnell zugänglich.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Reibungslos & schön</strong><br/>Klarer Look, dezente Animationen, natürliche Gesten.</div></li>
+          </ul>
+        </div>
+        <div class="card">
+          <ul class="items">
+            <li><span class="icon" aria-hidden="true"></span><div><strong>iOS-nativ</strong><br/>Barrierefreiheit inklusive.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Globale Suche</strong><br/>Finde Einträge über alle Sammlungen hinweg.</div></li>
+            <li><span class="icon" aria-hidden="true"></span><div><strong>Optionaler Sync</strong><br/>iCloud, wenn du möchtest – lokal funktioniert alles.</div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audience -->
+    <section aria-labelledby="audience">
+      <div class="kicker">Zielgruppen</div>
+      <h2 id="audience">Für wen?</h2>
+      <div class="grid cols-3" style="margin-top:1rem">
+        <div class="card"><strong>Kreativ & Content</strong><br/><span class="sub">Ideen, Skripte, Moodboards</span></div>
+        <div class="card"><strong>Research & Studium</strong><br/><span class="sub">Quellen, Notizen, Paper-Auszüge</span></div>
+        <div class="card"><strong>Produkt & Projekte</strong><br/><span class="sub">To-Dos, Roadmaps, Referenzen</span></div>
+      </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section id="waitlist" aria-labelledby="cta">
+      <div class="kicker">Benachrichtigung</div>
+      <h2 id="cta">Bald im App Store – werde benachrichtigt</h2>
+      <p class="sub">Trag deine E-Mail ein und erfahre als Erste·r, wenn MindOrganizer verfügbar ist.</p>
+      <form action="#" method="post" aria-label="Warteliste">
+        <label for="email" class="sr-only">E-Mail</label>
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="dein.name@mail.com" required />
+        <button class="btn" type="submit">Benachrichtigen</button>
+        <a class="btn ghost" href="mailto:support@example.com?subject=MindOrganizer%20Early%20Access">Kontakt</a>
+      </form>
+      <p class="sub">Kein Spam. Abmeldung jederzeit möglich.</p>
+    </section>
+
+    <!-- Early Access -->
+    <section id="early" aria-labelledby="early-access">
+      <div class="kicker">Frühstarter·innen</div>
+      <h2 id="early-access">Early Access sichern</h2>
+      <div class="grid cols-3" style="margin-top:1rem">
+        <div class="card"><span class="sub">Zugang zu Beta-Builds</span></div>
+        <div class="card"><span class="sub">Direktes Feedback-Loop</span></div>
+        <div class="card"><span class="sub">Dankeschön in den Release-Notes</span></div>
+      </div>
+      <div class="cta" style="margin-top:1rem">
+        <a class="btn" href="#waitlist">Jetzt vormerken</a>
+        <a class="btn ghost" href="https://apps.apple.com/app/id000000" rel="noopener">Später im App Store</a>
+      </div>
+    </section>
+
+    <!--
