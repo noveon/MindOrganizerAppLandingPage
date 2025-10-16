@@ -3,578 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MindOrganizer · Deine Gedanken, klar strukturiert.</title>
+  <title>MindOrganizer – Schnelle, schöne Sammlungen für deine Gedanken</title>
 
   <!-- Meta / SEO -->
-  <meta name="description" content="Modularer Wissens-Organizer für iOS 26+: Inhalte als Blöcke (Text, Links, Fotos; bald Audio & Skizze). Schnell erfassen, klar strukturieren, flüssig interagieren." />
+  <meta name="description" content="MindOrganizer: Die schnelle, schöne Art, Gedanken festzuhalten und in flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung." />
+  <link rel="canonical" href="https://example.com/" />
   <meta name="theme-color" content="#0ea5e9" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="MindOrganizer · Deine Gedanken, klar strukturiert." />
-  <meta property="og:description" content="Sammeln. Strukturieren. Weiterdenken. Inhalte als Blöcke – Text, Links, Fotos; bald Audio & Skizze." />
+  <meta property="og:title" content="MindOrganizer – Ordne deine Gedanken" />
+  <meta property="og:description" content="Ob Idee, Fundstück oder Moment: MindOrganizer macht aus Eingebungen verwertbare Erkenntnisse – Text, Fotos, Links, Sprachnotizen." />
   <meta property="og:image" content="social-preview.png" />
   <meta property="og:locale" content="de_DE" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MindOrganizer · Deine Gedanken, klar strukturiert." />
-  <meta name="twitter:description" content="Vom Gedanken zur Sammlung – ein Block nach dem anderen." />
+  <meta name="twitter:title" content="MindOrganizer – Ordne deine Gedanken" />
+  <meta name="twitter:description" content="Schnell erfassen. Stressfrei strukturieren. Schön benutzen. Privat auf deinem Gerät." />
   <meta name="twitter:image" content="social-preview.png" />
 
   <!-- Icons -->
   <link rel="icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
-  <!-- JSON-LD -->
+  <!-- Schema.org -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "MobileApplication",
-    "name": "MindOrganizer",
-    "applicationCategory": "ProductivityApplication",
-    "operatingSystem": "iOS 26+",
-    "url": "https://example.com",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-    "description": "Modularer Wissens-Organizer: Inhalte als Blöcke (Text, Links, Fotos; bald Audio & Skizze). Schnell erfassen, klar strukturieren, flüssig interagieren."
+    "@context":"https://schema.org",
+    "@type":"MobileApplication",
+    "name":"MindOrganizer",
+    "applicationCategory":"ProductivityApplication",
+    "operatingSystem":"iOS",
+    "url":"https://example.com",
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},
+    "description":"Schnell erfassen. Stressfrei strukturieren. Schön benutzen. Privat auf deinem Gerät."
   }
   </script>
 
   <style>
     :root{
-      --bg: #eef3f8;
-      --text:#0f172a;
-      --muted:#64748b;
-      --card:#ffffff;
-      --ring:#cfe9fb;
-      --brand:#0ea5e9;
-      --brand-600:#0284c7;
-
-      /* Block-Akzente */
-      --accent-heading:#f59e0b; /* Orange */
-      --accent-text:#3b82f6;    /* Blau */
-      --accent-links:#8b5cf6;   /* Violett */
-      --accent-photos:#10b981;  /* Grün */
-      --accent-audio:#14b8a6;   /* Teal */
-      --accent-sketch:#06b6d4;  /* Cyan */
+      --bg:#0b1220;           /* Base: dunkler, moderner Look – Hellmodus via prefers-color-scheme */
+      --card:#0f172a;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --brand:#38bdf8;
+      --brand-600:#0ea5e9;
+      --ring:#164e63;
+      --ok: #34d399;
+      --warn: #fb923c;
     }
-    @media (prefers-color-scheme: dark){
+    @media (prefers-color-scheme: light){
       :root{
-        --bg:#0b1220;
-        --text:#e5e7eb;
-        --muted:#9ca3af;
-        --card:#0f172a;
-        --ring:#0b2940;
-        --brand:#38bdf8;
-        --brand-600:#0ea5e9;
-      }
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
-      line-height:1.6; color:var(--text);
-      background:
-        radial-gradient(1100px 500px at 50% -10%, rgba(14,165,233,.18), transparent 65%),
-        linear-gradient(180deg, rgba(255,255,255,.6), transparent 40%),
-        var(--bg);
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    }
-    a{color:var(--brand);text-decoration:none}
-    .container{max-width:1140px;margin-inline:auto;padding:0 1rem}
-    .skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
-    .skip:focus{left:1rem;top:1rem;width:auto;height:auto;background:#fff;padding:.5rem .75rem;border-radius:.5rem;z-index:1000}
-
-    /* Header / Nav */
-    header{
-      position:sticky; top:0; z-index:50; backdrop-filter: blur(16px);
-      background: color-mix(in oklab, var(--card), transparent 35%);
-      border-bottom:1px solid color-mix(in oklab, var(--ring), transparent 45%);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.75rem 0;
-    }
-    .brand{display:flex; align-items:center; gap:.6rem}
-    .logo{
-      width:38px; height:38px; border-radius:12px;
-      background: linear-gradient(180deg, var(--brand), var(--brand-600));
-      box-shadow: 0 8px 28px rgba(14,165,233,.35), inset 0 1px 0 rgba(255,255,255,.4);
-    }
-    .nav a.btn{padding:.6rem .9rem;border-radius:12px;border:1.5px solid transparent;background:var(--brand);color:#fff;font-weight:600;box-shadow:0 6px 18px rgba(14,165,233,.35)}
-    .nav a.btn.ghost{background:transparent;color:var(--brand);border-color:var(--ring);box-shadow:none}
-
-    /* Hero */
-    .hero{
-      text-align:center; padding:3.5rem 0 2rem;
-      background: radial-gradient(1000px 400px at 50% -25%, rgba(14,165,233,.18), transparent 70%);
-    }
-    .hero h1{font-size:clamp(2rem, 5vw, 3.25rem); margin:.5rem 0}
-    .hero p.lead{max-width:760px;margin:0 auto 1.25rem;color:var(--muted);font-size:1.125rem}
-    .cta{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
-    .btn{
-      display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1rem;border-radius:14px;border:2px solid transparent;
-      background:var(--brand);color:#fff;font-weight:700;box-shadow:0 8px 22px rgba(14,165,233,.35);transition:.2s transform,.2s box-shadow
-    }
-    .btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(14,165,233,.45)}
-    .btn.ghost{background:transparent;color:var(--brand);border-color:var(--ring);box-shadow:none}
-    .hero-media{
-      margin:1.25rem auto 0; max-width:920px;
-      border-radius:18px; overflow:hidden;
-      border:1px solid color-mix(in oklab, var(--ring), transparent 45%);
-      background: color-mix(in oklab, var(--card), transparent 0%);
-      box-shadow: 0 10px 40px rgba(2,8,23,.10);
-    }
-    video{display:block;width:100%;height:auto}
-
-    /* Sections */
-    main{padding:1rem 0 3rem}
-    section{padding:2.5rem 0}
-    h2{font-size:1.85rem;margin:0 0 .25rem}
-    .sub{color:var(--muted);margin:0 0 1.25rem}
-
-    .grid{display:grid; gap:1rem}
-    @media (min-width: 760px){
-      .cols-2{grid-template-columns:repeat(2,1fr)}
-      .cols-3{grid-template-columns:repeat(3,1fr)}
-      .cols-4{grid-template-columns:repeat(4,1fr)}
-    }
-
-    /* Cards / Glass */
-    .card{
-      position:relative;
-      background: color-mix(in oklab, var(--card), transparent 0%);
-      border:1px solid color-mix(in oklab, var(--ring), transparent 50%);
-      border-radius:16px; padding:1rem;
-      box-shadow:0 2px 10px rgba(0,0,0,.04);
-    }
-    .glass{
-      background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.14));
-      border:1px solid rgba(255,255,255,.35);
-      backdrop-filter: blur(18px) saturate(120%);
-      box-shadow: 0 10px 30px rgba(2,8,23,.20), inset 0 1px 0 rgba(255,255,255,.5);
-    }
-    .accent{border-left:4px solid currentColor; padding-left:.9rem}
-
-    /* Feature list */
-    .feature-list{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
-    .feature-list li{
-      display:flex;gap:.6rem;align-items:flex-start;
-      padding:.6rem .7rem;border-radius:12px;
-      border:1px dashed color-mix(in oklab, var(--ring), transparent 50%);
-      background:linear-gradient(180deg, color-mix(in oklab, var(--card), transparent 0%), transparent);
-    }
-
-    /* Palette */
-    .palette{display:flex;gap:.5rem;flex-wrap:wrap}
-    .swatch{display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;border-radius:12px;border:1px solid color-mix(in oklab, var(--ring), transparent 40%)}
-    .dot{width:14px;height:14px;border-radius:999px}
-
-    /* Placeholders for screenshots */
-    .ph{
-      height:220px;border-radius:14px;
-      background: repeating-linear-gradient(135deg, #e2e8f0 0 12px, #eef2f7 12px 24px);
-      color:#64748b;display:flex;align-items:center;justify-content:center;font-size:.95rem
-    }
-    @media (prefers-color-scheme: dark){
-      .ph{background: repeating-linear-gradient(135deg, #1f2937 0 12px, #111827 12px 24px); color:#9ca3af;}
-    }
-
-    /* FAQ */
-    .faq{display:grid;gap:1rem}
-    .faq details{border:1px solid color-mix(in oklab, var(--ring), transparent 45%);border-radius:12px;padding:.75rem 1rem}
-    .faq summary{font-weight:700;cursor:pointer}
-
-    /* Footer */
-    footer{
-      background: color-mix(in oklab, var(--card), transparent 0%);
-      border-top:1px solid color-mix(in oklab, var(--ring), transparent 55%);
-      margin-top:2rem
-    }
-    .foot{
-      display:grid; gap:1rem; padding:1.25rem 0; color:var(--muted); font-size:.95rem;
-    }
-    @media (min-width: 760px){ .foot{grid-template-columns: 2fr 1fr 1fr 1fr} }
-
-    /* Motion friendly */
-    @media (prefers-reduced-motion: reduce){
-      .btn, .btn:hover{transition:none;transform:none}
-    }
-  </style>
-</head>
-<body>
-  <a class="skip" href="#main">Zum Inhalt springen</a>
-
-  <!-- Sticky Nav with Liquid Glass buttons -->
-  <header>
-    <div class="container nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <strong>MindOrganizer</strong>
-        <span aria-label="iOS-Version" style="margin-left:.5rem;color:var(--muted);font-size:.9rem;">iOS 26+</span>
-      </div>
-      <nav aria-label="Hauptnavigation" style="display:flex;gap:.6rem;flex-wrap:wrap">
-        <a class="btn ghost" href="#blocks">Blöcke</a>
-        <a class="btn ghost" href="#photos">Fotos</a>
-        <a class="btn ghost" href="#audio">Audio</a>
-        <a class="btn ghost" href="#sketch">Skizze</a>
-        <a class="btn ghost" href="#design">Design</a>
-        <a class="btn" href="#newsletter">Benachrichtigen lassen</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <h1>Deine Gedanken, klar strukturiert.</h1>
-      <p class="lead">Modularer Wissens-Organizer: Blöcke für Text, Links, Fotos – bald Sprachnotizen & Skizzen. Fokus auf schnelle Erfassung, klare Übersicht und flüssige Interaktion im Liquid-Glass-Look.</p>
-      <div class="cta">
-        <a class="btn" href="#newsletter">App Store – bald verfügbar</a>
-        <a class="btn ghost" href="#blocks">Mehr erfahren</a>
-      </div>
-      <!-- Loop-Video (CTA-Demo) -->
-      <div class="hero-media glass">
-        <video autoplay muted loop playsinline poster="hero-poster.jpg" aria-label="Kurzvideo: Plus-Button → Blocktyp wählen → Bearbeiten → Reorder → Foto-Fullscreen">
-          <source src="hero-loop.mp4" type="video/mp4" />
-          Dein Browser unterstützt das Video nicht.
-        </video>
-      </div>
-    </div>
-  </section>
-
-  <main id="main" class="container">
-    <!-- KURZÜBERBLICK -->
-    <section aria-labelledby="overview">
-      <h2 id="overview">Kurzüberblick</h2>
-      <p class="sub">Sammeln. Strukturieren. Weiterdenken — ohne komplexe Notiz-Strukturen.</p>
-      <div class="grid cols-3">
-        <div class="card accent" style="color:var(--brand)">
-          <strong>Blöcke</strong><br />
-          Text, Links, Fotos — bald Audio & Skizze. Inhalte wachsen modular.
-        </div>
-        <div class="card accent" style="color:var(--brand)">
-          <strong>Fluss & Geschwindigkeit</strong><br />
-          Runder Plus-Button (Liquid Glass), klare Werkzeuge, flüssige Interaktion.
-        </div>
-        <div class="card accent" style="color:var(--brand)">
-          <strong>On-device & Offline</strong><br />
-          Kernfunktionen ohne Netz – volle Kontrolle über deine Daten.
-        </div>
-      </div>
-    </section>
-
-    <!-- KERN-WORKFLOWS -->
-    <section aria-labelledby="workflows">
-      <h2 id="workflows">Kern-Workflows</h2>
-      <div class="grid cols-3">
-        <div class="card">
-          <h3 class="accent" style="color:var(--brand)">Erstellen</h3>
-          <ul class="feature-list">
-            <li>Runder Plus-Button im Liquid-Glass-Look</li>
-            <li>Direkte Auswahl des Blocktyps</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3 class="accent" style="color:var(--brand)">Strukturieren</h3>
-          <ul class="feature-list">
-            <li>Blöcke ein-/ausklappen</li>
-            <li>Drag &amp; Drop sortieren, duplizieren, löschen</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3 class="accent" style="color:var(--brand)">Bearbeiten & Anzeigen</h3>
-          <ul class="feature-list">
-            <li>Inline-Editing (Text/Links/Bildunterschriften)</li>
-            <li>Modal/Sheet für Foto &amp; Link-Hinzufügen</li>
-            <li>Kompakte Karten; aufgeklappt mit Details &amp; Aktionen</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- BLÖCKE HEUTE -->
-    <section aria-labelledby="blocks" id="blocks">
-      <h2 id="blocks">Blöcke (heute)</h2>
-      <div class="grid cols-2">
-        <div class="card">
-          <h3 class="accent" style="color:var(--accent-heading)">Überschrift</h3>
-          <ul class="feature-list">
-            <li>Abschnittsstruktur mit Titelzeile</li>
-            <li>Akzentlinie (Orange)</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3 class="accent" style="color:var(--accent-text)">Text</h3>
-          <ul class="feature-list">
-            <li>Titel + Fließtext, Auto-Größe</li>
-            <li>Collapsed: nur Titel · Expanded: Editor</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3 class="accent" style="color:var(--accent-links)">Links</h3>
-          <ul class="feature-list">
-            <li>Liste (Titel + optionale Beschreibung)</li>
-            <li>Collapsed: Blocktitel + Anzahl</li>
-            <li>Expanded: geordnete Liste, „Link hinzufügen“ (zentraler Button)</li>
-            <li>Öffnen im Safari-Sheet · Akzent: Violett</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3 class="accent" style="color:var(--accent-photos)">Fotos</h3>
-          <ul class="feature-list">
-            <li>Collapsed: 2 Thumbnails + „+N“</li>
-            <li>Expanded: adaptives Raster (1–3 Spalten)</li>
-            <li>Vollbild-Viewer mit Glas-Close &amp; Zähler (1/9)</li>
-            <li>Hinzufügen: „Aus Album“ oder „Mit Kamera aufnehmen“</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOTOS IM FOKUS -->
-    <section aria-labelledby="photos" id="photos">
-      <h2 id="photos">Fotos im Fokus</h2>
-      <p class="sub">Schnell rein, schön anschauen – performant auch bei vielen Bildern.</p>
-      <div class="grid cols-3">
-        <div class="card"><div class="ph" aria-label="2-Thumb-Vorschau">2-Thumb-Vorschau</div></div>
-        <div class="card"><div class="ph" aria-label="Adaptive Raster-Ansicht">Adaptives Raster</div></div>
-        <div class="card glass">
-          <div class="ph" aria-label="Fullscreen-Overlay mit Glas-Schließen">Foto-Fullscreen (Glas-X)</div>
-        </div>
-      </div>
-      <div class="card" style="margin-top:1rem">
-        <strong>Performance & Technik</strong>
-        <ul class="feature-list" style="margin-top:.5rem">
-          <li>Downsampling + Memory-Cache für Thumbnails</li>
-          <li>Asynchrones Laden · rundes Scrolling auch bei 9+ Bildern</li>
-          <li>Stabile IDs für Foto-Einträge (keine „Index out of range“)</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- SNEAK PEEK: AUDIO & SKIZZE -->
-    <section aria-labelledby="audio" id="audio">
-      <h2 id="audio">Sneak Peek: Sprachnotizen</h2>
-      <div class="grid cols-2">
-        <div class="card">
-          <h3 class="accent" style="color:var(--accent-audio)">Mini-Player (zugeklappt)</h3>
-          <ul class="feature-list">
-            <li>Play/Pause, Dauer, Datum, Mini-Waveform</li>
-            <li>Bleibt „sticky“, wenn Wiedergabe weiterläuft</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3 class="accent" style="color:var(--accent-audio)">Große Waveform (aufgeklappt)</h3>
-          <ul class="feature-list">
-            <li>Scrubbing, Skip ±15s, Geschwindigkeit</li>
-            <li>Optional Transkript + Notiz · Aufnahme-Flow</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section aria-labelledby="sketch" id="sketch">
-      <h2 id="sketch">Sneak Peek: Skizze</h2>
-      <div class="grid cols-2">
-        <div class="card">
-          <h3 class="accent" style="color:var(--accent-sketch)">Canvas (PencilKit)</h3>
-          <ul class="feature-list">
-            <li>Weißer Hintergrund · kompakte Toolbar</li>
-            <li>Werkzeuge: 5 Farben · 4 Strichstärken</li>
-            <li>Radierer in 4 Stärken · Undo/Redo · Alles löschen</li>
-          </ul>
-        </div>
-        <div class="card"><div class="ph" aria-label="Skizzen-Canvas mit Werkzeugleiste">Skizzen-Canvas</div></div>
-      </div>
-    </section>
-
-    <!-- BEDIENUNG -->
-    <section aria-labelledby="ux">
-      <h2 id="ux">Bedienung</h2>
-      <div class="grid cols-3">
-        <div class="card">
-          <ul class="feature-list">
-            <li>Ein-/Ausklappen pro Block (Chevron)</li>
-            <li>Reorder per Drag-Handle mit Haptik</li>
-          </ul>
-        </div>
-        <div class="card">
-          <ul class="feature-list">
-            <li>Kontextmenüs (Fotoquelle, Link bearbeiten/löschen)</li>
-            <li>Keyboard-Avoidance für Text &amp; Transkript</li>
-          </ul>
-        </div>
-        <div class="card">
-          <ul class="feature-list">
-            <li>Große Touch-Targets (≥44×44pt)</li>
-            <li>VoiceOver-Labels, Fokus-Ringe, Kontraste</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- DESIGN-HIGHLIGHT -->
-    <section aria-labelledby="design" id="design">
-      <h2 id="design">Design-Highlight: Liquid Glass UI</h2>
-      <p class="sub">Moderne, dezente Steuerflächen – Inhalte bleiben ruhig im Fokus.</p>
-      <div class="grid cols-3">
-        <div class="card glass"><div class="ph" aria-label="Glas-Close im Vollbild">Glas-Schließen</div></div>
-        <div class="card">
-          <strong>Farbcodierung</strong>
-          <div class="palette" style="margin-top:.6rem">
-            <div class="swatch"><span class="dot" style="background:var(--accent-heading)"></span>Überschrift</div>
-            <div class="swatch"><span class="dot" style="background:var(--accent-text)"></span>Text</div>
-            <div class="swatch"><span class="dot" style="background:var(--accent-links)"></span>Links</div>
-            <div class="swatch"><span class="dot" style="background:var(--accent-photos)"></span>Fotos</div>
-            <div class="swatch"><span class="dot" style="background:var(--accent-audio)"></span>Audio</div>
-            <div class="swatch"><span class="dot" style="background:var(--accent-sketch)"></span>Skizze</div>
-          </div>
-        </div>
-        <div class="card">
-          <strong>Typografie & Karten</strong>
-          <ul class="feature-list" style="margin-top:.6rem">
-            <li>Klare Hierarchie (Titel, Body, Caption)</li>
-            <li>Blockkarten mit dünner linksseitiger Akzentlinie</li>
-            <li>Sanfte Gradienten / Mesh-Hintergrund</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRODUKTIVITÄT -->
-    <section aria-labelledby="productivity">
-      <h2 id="productivity">Produktivität</h2>
-      <div class="grid cols-3">
-        <div class="card">
-          <strong>Schnellstart</strong>
-          <p class="sub">Plus-Button → Blocktyp wählen → los.</p>
-        </div>
-        <div class="card">
-          <strong>Offline-fähig</strong>
-          <p class="sub">Kernfunktionen laufen lokal auf dem Gerät.</p>
-        </div>
-        <div class="card">
-          <strong>Skalierbar</strong>
-          <p class="sub">Flüssig auch bei vielen Bildern & langen Listen.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ACCESSIBILITY & PRIVACY -->
-    <section aria-labelledby="privacy">
-      <h2 id="privacy">Accessibility & Privacy</h2>
-      <div class="grid cols-2">
-        <div class="card">
-          <ul class="feature-list">
-            <li>VoiceOver-Labels („Foto, 3 von 9“)</li>
-            <li>Hohe Kontraste, Fokus-Ringe</li>
-            <li>Große Touch-Ziele (≥44pt)</li>
-          </ul>
-        </div>
-        <div class="card">
-          <ul class="feature-list">
-            <li>On-device Verarbeitung (Fotos, Skizzen, Audio)</li>
-            <li>Nur notwendige Freigaben (Kamera/Mikro)</li>
-            <li>Keine unnötigen Netzabhängigkeiten</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ROADMAP -->
-    <section aria-labelledby="roadmap" id="roadmap">
-      <h2 id="roadmap">Roadmap</h2>
-      <p class="sub">Was als Nächstes kommt.</p>
-      <div class="grid cols-3">
-        <div class="card accent" style="color:var(--accent-audio)">
-          <strong>Sprachnotizen</strong><br />
-          Transkript optional, Scrubbing, Skip ±15s, Geschwindigkeiten.
-        </div>
-        <div class="card accent" style="color:var(--accent-sketch)">
-          <strong>Skizzen</strong><br />
-          PencilKit-Canvas, 5 Farben, 4 Stärken, Radierer & Undo/Redo.
-        </div>
-        <div class="card accent" style="color:var(--brand)">
-          <strong>Mehr</strong><br />
-          Redo, Export/Teilen, Transkript-Suche.
-        </div>
-      </div>
-      <p class="sub" style="margin-top:.75rem">Stand: 16. Oktober 2025</p>
-    </section>
-
-    <!-- FAQ -->
-    <section aria-labelledby="faq" id="faq">
-      <h2 id="faq">FAQ</h2>
-      <div class="faq">
-        <details>
-          <summary>Welche Geräte & iOS-Version werden unterstützt?</summary>
-          <p>iOS 26+ (neueste UI-APIs inkl. Liquid-Glass-Effekte).</p>
-        </details>
-        <details>
-          <summary>Brauche ich Internet oder iCloud?</summary>
-          <p>Nein. Kernfunktionen laufen lokal. iCloud kann später optional dazugeschaltet werden.</p>
-        </details>
-        <details>
-          <summary>Wie werden Fotos/Audio verarbeitet?</summary>
-          <p>On-device. System-Prompts erklären Kamera/Mikro-Zugriffe transparent.</p>
-        </details>
-        <details>
-          <summary>Gibt es Export-Möglichkeiten?</summary>
-          <p>Geplant: Export/Teilen (z. B. Text/Markdown) sowie Transkript-Suche.</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- NEWSLETTER / CTA -->
-    <section aria-labelledby="newsletter" id="newsletter">
-      <h2 id="newsletter">Updates & Launch</h2>
-      <p class="sub">Benachrichtige mich, wenn MindOrganizer im App Store erscheint.</p>
-      <form class="card glass" action="https://example.com/newsletter" method="post">
-        <div class="grid cols-2" style="align-items:end">
-          <div>
-            <label for="email"><strong>E-Mail</strong></label><br />
-            <input id="email" name="email" type="email" required
-              placeholder="dein.name@mail.com"
-              style="width:100%;margin-top:.4rem;padding:.8rem 1rem;border-radius:12px;border:1px solid color-mix(in oklab, var(--ring), transparent 40%);background:var(--card);color:var(--text)" />
-            <p class="sub" style="margin:.4rem 0 0 0">Wir senden nur relevante Updates. Kein Spam.</p>
-          </div>
-          <div>
-            <button class="btn" type="submit" style="width:100%">Benachrichtigen lassen</button>
-          </div>
-        </div>
-        <noscript><p class="sub" style="margin-top:.75rem">Kein JavaScript? Schreib uns: <a href="mailto:support@example.com?subject=MindOrganizer%20Updates">support@example.com</a></p></noscript>
-      </form>
-      <div class="cta" style="margin-top:1rem">
-        <a class="btn ghost" href="#roadmap">Roadmap ansehen</a>
-        <a class="btn" href="#">App Store – bald verfügbar</a>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container foot">
-      <div>
-        <strong>MindOrganizer</strong>
-        <p>„Vom Gedanken zur Sammlung – ein Block nach dem anderen.“</p>
-        <p style="margin:.5rem 0 0 0">&copy; 2025 MindOrganizer</p>
-      </div>
-      <div>
-        <strong>Kontakt</strong><br />
-        <a href="mailto:support@example.com">support@example.com</a>
-      </div>
-      <div>
-        <strong>Rechtliches</strong><br />
-        <a href="privacy.html">Datenschutzerklärung</a><br />
-        <a href="impressum.html">Impressum</a>
-      </div>
-      <div>
-        <strong>Links</strong><br />
-        <a href="#blocks">Features</a><br />
-        <a href="#design">Design</a><br />
-        <a href="#faq">FAQ</a>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
+        --bg:#f1f5f9;
+        --card:#ffffff;
+        --text:#111827;
+        --muted:#64748b;
+        --brand:#0ea5e9;
+        --brand-600:#0284c7;
+        --ring:#bae6fd;
+        --ok:#059669;
+        --warn:#ea
