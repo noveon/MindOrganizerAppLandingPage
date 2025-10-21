@@ -6,12 +6,25 @@
   <title>MindOrganizer – Ordne deine Gedanken</title>
   <meta name="description" content="Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung." />
   <meta name="theme-color" content="#0ea5e9" />
-  <link rel="icon" href="favicon.ico" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="color-scheme" content="dark light" />
+  <link rel="canonical" href="https://example.com/" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MindOrganizer – Ordne deine Gedanken" />
+  <meta property="og:description" content="Festhalten → ordnen → wiederfinden. Schnell, schön, privat." />
+  <meta property="og:image" content="https://example.com/og-image.jpg" />
+  <meta property="og:locale" content="de_DE" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MindOrganizer – Ordne deine Gedanken" />
+  <meta name="twitter:description" content="Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead." />
+  <meta name="twitter:image" content="https://example.com/og-image.jpg" />
   <style>
     /* ===== Tokens ===== */
     :root{
-      --bg: #0b111a;           /* Dark-first; Light-Variante via prefers-color-scheme */
+      --bg: #0b111a;
       --surface: #0e1622;
       --elev: #111a27;
       --text: #e6ebf3;
@@ -24,6 +37,7 @@
       --container: 1120px;
       --shadow: 0 8px 30px rgba(0,0,0,.18);
       --focus: 2px solid #38bdf8;
+      --min-tap: 44px; /* a11y */
     }
     @media (prefers-color-scheme: light){
       :root{
@@ -35,6 +49,10 @@
       }
     }
 
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important}
+    }
+
     /* ===== Base ===== */
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -44,65 +62,33 @@
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
     a{color:var(--brand); text-decoration:none}
+    a:focus-visible, button:focus-visible, input:focus-visible{outline:var(--focus); outline-offset:2px}
     .container{max-width:var(--container); margin-inline:auto; padding:0 1rem}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;background:#000;color:#fff;padding:.5rem 1rem;border-radius:8px;z-index:999}
 
-    /* ===== Header / Hero (clean, ohne Bogen/Verlauf) ===== */
-    header{
-      border-bottom:1px solid var(--border);
-      background: var(--bg);
-    }
-    .top{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-    }
-    .logo{
-      display:flex; gap:.6rem; align-items:center; font-weight:800; letter-spacing:.2px;
-    }
-    .logo-badge{
-      width:36px; height:36px; border-radius:10px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-600));
-      box-shadow: 0 6px 18px rgba(14,165,233,.35);
-    }
-    .chip{
-      padding:.35rem .65rem; border:1px solid var(--border);
-      border-radius:999px; color:var(--muted); background:var(--surface); font-size:.85rem;
-    }
+    /* ===== Header / Hero ===== */
+    header{border-bottom:1px solid var(--border); background: var(--bg);}    
+    nav[aria-label="Hauptnavigation"]{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{display:flex; gap:.6rem; align-items:center; font-weight:800; letter-spacing:.2px}
+    .logo-badge{width:36px; height:36px; border-radius:10px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); box-shadow: 0 6px 18px rgba(14,165,233,.35)}
+    .chip{padding:.35rem .65rem; border:1px solid var(--border); border-radius:999px; color:var(--muted); background:var(--surface); font-size:.85rem}
 
-    .hero{
-      display:grid; grid-template-columns:1.05fr .95fr; gap:2rem;
-      padding:48px 0;
-    }
+    .hero{display:grid; grid-template-columns:1.05fr .95fr; gap:2rem; padding:48px 0}
     @media (max-width: 900px){ .hero{grid-template-columns:1fr; gap:1.25rem} }
 
-    .hero h1{
-      font-size: clamp(2.2rem, 5vw, 3.4rem); line-height:1.08; margin:0 0 .6rem;
-      background: linear-gradient(90deg, #fff, #bfe9ff 60%, #7ad3ff 100%);
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-    }
+    .hero h1{font-size: clamp(2.2rem, 5vw, 3.4rem); line-height:1.08; margin:0 0 .6rem; background: linear-gradient(90deg, #fff, #bfe9ff 60%, #7ad3ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent}
     .lead{color:var(--muted); max-width:64ch; margin:0 0 1.1rem}
     .cta{display:flex; gap:.8rem; flex-wrap:wrap; align-items:center}
-    .btn{
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.9rem 1.1rem; border-radius:14px; border:1px solid transparent;
-      background:var(--brand); color:#05131a; font-weight:700; box-shadow:var(--shadow);
-      transition:.18s transform, .18s box-shadow, .18s background-color, .18s border-color;
-    }
+    .btn{display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.1rem; border-radius:14px; border:1px solid transparent; background:var(--brand); color:#05131a; font-weight:700; box-shadow:var(--shadow); transition:.18s transform, .18s box-shadow, .18s background-color, .18s border-color; min-height:var(--min-tap)}
     .btn:hover{transform:translateY(-1px)}
-    .btn:focus-visible{outline:var(--focus); outline-offset:2px}
     .btn.ghost{background:transparent; color:var(--brand); border-color:var(--border); box-shadow:none}
     .btn.subtle{background:transparent; color:var(--text); border-color:var(--border); box-shadow:none}
 
-    /* Modern shot placeholders (keine Telefon-Rahmen) */
-    .shots{
-      display:grid; gap:1rem; align-content:start;
-    }
-    .shot{
-      height:220px; border-radius:18px; background:var(--elev);
-      border:1px solid var(--border);
-      display:grid; place-items:center; color:var(--muted); font-weight:600;
-      box-shadow:var(--shadow);
-    }
+    /* Shots */
+    .shots{display:grid; gap:1rem; align-content:start}
+    .shot{height:220px; border-radius:18px; background:var(--elev); border:1px solid var(--border); display:grid; place-items:center; color:var(--muted); font-weight:600; box-shadow:var(--shadow)}
     @media (min-width: 760px){ .shots{grid-template-columns:repeat(3,1fr)} }
 
     /* ===== Sections ===== */
@@ -119,47 +105,50 @@
     @media (min-width:960px){ .cols-3{grid-template-columns:repeat(3,1fr)} }
     @media (min-width:1100px){ .cols-4{grid-template-columns:repeat(4,1fr)} }
 
-    .card{
-      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-      padding:1rem 1.1rem; box-shadow:var(--shadow);
-    }
+    .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1rem 1.1rem; box-shadow:var(--shadow)}
 
-    /* Konsistente Icon-Badges (CSS, keine Emojis) */
     .items{list-style:none; margin:0; padding:0; display:grid; gap:.75rem}
     .items li{display:grid; grid-template-columns:auto 1fr; gap:.75rem; align-items:start}
-    .icon{
-      width:26px; height:26px; border-radius:8px; display:grid; place-items:center; position:relative;
-      background: linear-gradient(135deg, var(--brand), var(--brand-600));
-      box-shadow: 0 6px 16px rgba(14,165,233,.35);
-    }
-    .icon::after{
-      content:""; width:10px; height:10px; border-radius:3px; background:#001018;
-    }
+    .icon{width:26px; height:26px; border-radius:8px; display:grid; place-items:center; position:relative; background: linear-gradient(135deg, var(--brand), var(--brand-600)); box-shadow: 0 6px 16px rgba(14,165,233,.35)}
+    .icon::after{content:""; width:10px; height:10px; border-radius:3px; background:#001018}
 
-    /* Formular */
+    /* Forms */
     form{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin-top:.5rem}
-    input[type="email"]{
-      background:var(--surface); color:var(--text); border:1px solid var(--border);
-      border-radius:12px; padding:.9rem 1rem; min-width:260px;
-    }
+    input[type="email"]{background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; min-width:260px}
     input[type="email"]::placeholder{color:var(--muted)}
-    input[type="email"]:focus-visible{outline:var(--focus); outline-offset:2px}
+
+    .form-msg{margin-top:.5rem}
+    .visually-hidden{clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px}
 
     /* Footer */
     footer{border-top:1px solid var(--border); background:var(--surface); padding:24px 0}
     footer .inner{display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; color:var(--muted)}
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "MindOrganizer",
+    "applicationCategory": "Productivity",
+    "operatingSystem": "iOS",
+    "isAccessibleForFree": true,
+    "offers": {"@type":"Offer", "price": "0", "priceCurrency":"EUR"},
+    "description": "Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung.",
+    "url": "https://example.com/"
+  }
+  </script>
 </head>
 <body>
+  <a href="#inhalt" class="skip-link">Zum Inhalt springen</a>
   <header>
     <div class="container">
-      <div class="top">
+      <nav aria-label="Hauptnavigation">
         <div class="logo">
           <span class="logo-badge" aria-hidden="true"></span>
           <span>MindOrganizer</span>
         </div>
-        <span class="chip">Bald im App Store</span>
-      </div>
+        <span class="chip" aria-live="polite">Bald im App Store</span>
+      </nav>
 
       <div class="hero">
         <div>
@@ -173,7 +162,7 @@
           </div>
         </div>
 
-        <!-- cleane, moderne Shots -->
+        <!-- Shots; ersetze Platzhalter durch echte Bilder und füge loading="lazy" hinzu -->
         <div class="shots" aria-label="App-Screens (Platzhalter)">
           <div class="shot" aria-label="Sammeln">Sammeln</div>
           <div class="shot" aria-label="Sammlungen">Sammlungen</div>
@@ -183,7 +172,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main id="inhalt" class="container">
     <!-- Elevator Pitch -->
     <section id="discover" aria-labelledby="pitch">
       <div class="kicker">Elevator Pitch</div>
@@ -268,12 +257,18 @@
       <div class="kicker">Benachrichtigung</div>
       <h2 id="cta">Bald im App Store – werde benachrichtigt</h2>
       <p class="sub">Trag deine E-Mail ein und erfahre als Erste·r, wenn MindOrganizer verfügbar ist.</p>
-      <form action="#" method="post" aria-label="Warteliste">
+      <form id="waitlist-form" action="/api/waitlist" method="post" aria-label="Warteliste" novalidate>
         <label for="email" class="sr-only">E-Mail</label>
-        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="dein.name@mail.com" required />
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="dein.name@mail.com" required aria-describedby="email-hint" />
+        <span id="email-hint" class="visually-hidden">Bitte gültige E‑Mail eingeben.</span>
+
+        <!-- Honeypot gegen Bots -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
+
         <button class="btn" type="submit">Benachrichtigen</button>
-        <a class="btn ghost" href="mailto:support@example.com?subject=MindOrganizer%20Early%20Access">Kontakt</a>
+        <a class="btn ghost" href="mailto:support@example.com?subject=MindOrganizer%20Early%20Access" rel="noopener noreferrer">Kontakt</a>
       </form>
+      <div class="form-msg" aria-live="polite" id="form-msg" role="status"></div>
       <p class="sub">Kein Spam. Abmeldung jederzeit möglich.</p>
     </section>
 
@@ -288,8 +283,63 @@
       </div>
       <div class="cta" style="margin-top:1rem">
         <a class="btn" href="#waitlist">Jetzt vormerken</a>
-        <a class="btn ghost" href="https://apps.apple.com/app/id000000" rel="noopener">Später im App Store</a>
+        <a class="btn ghost" href="https://apps.apple.com/app/id000000" rel="noopener noreferrer">Später im App Store</a>
       </div>
     </section>
+  </main>
 
-    <!--
+  <footer>
+    <div class="container inner">
+      <a href="#" class="sub">Impressum</a>
+      <a href="#" class="sub">Datenschutz</a>
+      <span aria-hidden="true">•</span>
+      <span class="sub">© <span id="y"></span> MindOrganizer</span>
+    </div>
+  </footer>
+
+  <noscript>MindOrganizer funktioniert auch ohne JavaScript – für Formular-Feedback und Analytics (falls aktiviert) sind Skripte hilfreich.</noscript>
+  <script>
+    // Kleines Progressive-Enhancement fürs Formular (Client-Fehlerfeedback, Doppel-Submit verhindern)
+    (function(){
+      const form = document.getElementById('waitlist-form');
+      const msg = document.getElementById('form-msg');
+      const year = document.getElementById('y');
+      if (year) year.textContent = new Date().getFullYear();
+      if (!form) return;
+      let busy = false;
+      form.addEventListener('submit', async (e) => {
+        if (busy) { e.preventDefault(); return; }
+        const hp = form.querySelector('input[name="website"]').value;
+        if (hp) { e.preventDefault(); return; }
+        const email = form.email.value.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          e.preventDefault();
+          msg.textContent = 'Bitte gib eine gültige E‑Mail-Adresse ein.';
+          return;
+        }
+        busy = true;
+        form.querySelector('button[type="submit"]').setAttribute('disabled','true');
+        msg.textContent = 'Sende…';
+        // Optional: fetch statt klassisches POST
+        e.preventDefault();
+        try{
+          const res = await fetch(form.action, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email})});
+          if(!res.ok) throw new Error('Fehler');
+          msg.textContent = 'Danke! Du stehst jetzt auf der Liste.';
+          form.reset();
+        }catch(err){
+          msg.textContent = 'Leider hat das nicht geklappt. Versuch es später noch einmal.';
+        }finally{
+          busy = false;
+          form.querySelector('button[type="submit"]').removeAttribute('disabled');
+        }
+      });
+    })();
+  </script>
+  <!-- Sicherheit (empfohlen als HTTP-Header, hier nur referenziert):
+    Content-Security-Policy: default-src 'self'; img-src 'self' https: data:; connect-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; frame-ancestors 'none';
+    Referrer-Policy: no-referrer-when-downgrade
+    Permissions-Policy: microphone=(), camera=(), geolocation=()
+  -->
+</body>
+</html>
