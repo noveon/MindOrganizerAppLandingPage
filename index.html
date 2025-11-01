@@ -1,345 +1,1111 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MindOrganizer – Ordne deine Gedanken</title>
-  <meta name="description" content="Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung." />
-  <meta name="theme-color" content="#0ea5e9" />
-  <meta name="color-scheme" content="dark light" />
-  <link rel="canonical" href="https://example.com/" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="MindOrganizer – Ordne deine Gedanken" />
-  <meta property="og:description" content="Festhalten → ordnen → wiederfinden. Schnell, schön, privat." />
-  <meta property="og:image" content="https://example.com/og-image.jpg" />
-  <meta property="og:locale" content="de_DE" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MindOrganizer – Ordne deine Gedanken" />
-  <meta name="twitter:description" content="Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead." />
-  <meta name="twitter:image" content="https://example.com/og-image.jpg" />
-  <style>
-    /* ===== Tokens ===== */
-    :root{
-      --bg: #0b111a;
-      --surface: #0e1622;
-      --elev: #111a27;
-      --text: #e6ebf3;
-      --muted: #91a0b5;
-      --border: #1b2a40;
-      --brand: #38bdf8;
-      --brand-600:#0ea5e9;
-      --ok:#34d399; --warn:#fb923c;
-      --radius: 16px; --radius-lg: 22px;
-      --container: 1120px;
-      --shadow: 0 8px 30px rgba(0,0,0,.18);
-      --focus: 2px solid #38bdf8;
-      --min-tap: 44px; /* a11y */
-    }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f6f8fb; --surface:#ffffff; --elev:#f9fbff;
-        --text:#0f172a; --muted:#627089; --border:#e2e8f0;
-        --brand:#0ea5e9; --brand-600:#0284c7;
-        --shadow: 0 6px 20px rgba(2,84,119,.10);
-        --focus: 2px solid #0ea5e9;
-      }
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindOrganizer — Gedanken brauchen Zeit zum Wachsen</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    @media (prefers-reduced-motion: reduce){
-      *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important}
-    }
+        :root {
+            /* Brand Colors from Palette */
+            --bg-dark: #0E1116;
+            --bg-darker: #0B0B0C;
+            --surface-dark: #1C1C1E;
+            
+            /* Phase Colors */
+            --green-primary: #34D399;
+            --green-surface: #165545;
+            --green-tint: #12453A;
+            
+            --orange-primary: #FB923C;
+            --orange-surface: #6B4520;
+            --orange-tint: #4A3518;
+            
+            --pink-primary: #EC4899;
+            --pink-surface: #4D2538;
+            --pink-tint: #3D1E2F;
+            
+            --blue-primary: #3B82F6;
+            --blue-surface: #1E3A6B;
+            --blue-tint: #1A2F52;
+            
+            --gray-primary: #A1A9B5;
+            --gray-surface: #454B54;
+            --gray-tint: #30343B;
+            
+            /* Text Colors */
+            --text-primary: #EAEAEA;
+            --text-secondary: #B8BDC6;
+            --text-tertiary: #94A3B8;
+            
+            /* Spacing */
+            --section-padding: clamp(80px, 10vw, 160px);
+        }
 
-    /* ===== Base ===== */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: ui-sans-serif, -apple-system, Inter, Segoe UI, Roboto, system-ui, Arial;
-      color:var(--text); background:var(--bg); line-height:1.6;
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    }
-    a{color:var(--brand); text-decoration:none}
-    a:focus-visible, button:focus-visible, input:focus-visible{outline:var(--focus); outline-offset:2px}
-    .container{max-width:var(--container); margin-inline:auto; padding:0 1rem}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;background:#000;color:#fff;padding:.5rem 1rem;border-radius:8px;z-index:999}
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    /* ===== Header / Hero ===== */
-    header{border-bottom:1px solid var(--border); background: var(--bg);}    
-    nav[aria-label="Hauptnavigation"]{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .logo{display:flex; gap:.6rem; align-items:center; font-weight:800; letter-spacing:.2px}
-    .logo-badge{width:36px; height:36px; border-radius:10px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); box-shadow: 0 6px 18px rgba(14,165,233,.35)}
-    .chip{padding:.35rem .65rem; border:1px solid var(--border); border-radius:999px; color:var(--muted); background:var(--surface); font-size:.85rem}
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
 
-    .hero{display:grid; grid-template-columns:1.05fr .95fr; gap:2rem; padding:48px 0}
-    @media (max-width: 900px){ .hero{grid-template-columns:1fr; gap:1.25rem} }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
 
-    .hero h1{font-size: clamp(2.2rem, 5vw, 3.4rem); line-height:1.08; margin:0 0 .6rem; background: linear-gradient(90deg, #fff, #bfe9ff 60%, #7ad3ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent}
-    .lead{color:var(--muted); max-width:64ch; margin:0 0 1.1rem}
-    .cta{display:flex; gap:.8rem; flex-wrap:wrap; align-items:center}
-    .btn{display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.1rem; border-radius:14px; border:1px solid transparent; background:var(--brand); color:#05131a; font-weight:700; box-shadow:var(--shadow); transition:.18s transform, .18s box-shadow, .18s background-color, .18s border-color; min-height:var(--min-tap)}
-    .btn:hover{transform:translateY(-1px)}
-    .btn.ghost{background:transparent; color:var(--brand); border-color:var(--border); box-shadow:none}
-    .btn.subtle{background:transparent; color:var(--text); border-color:var(--border); box-shadow:none}
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
 
-    /* Shots */
-    .shots{display:grid; gap:1rem; align-content:start}
-    .shot{height:220px; border-radius:18px; background:var(--elev); border:1px solid var(--border); display:grid; place-items:center; color:var(--muted); font-weight:600; box-shadow:var(--shadow)}
-    @media (min-width: 760px){ .shots{grid-template-columns:repeat(3,1fr)} }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-surface);
+            border-radius: 4px;
+        }
 
-    /* ===== Sections ===== */
-    main{padding:8px 0 48px}
-    section{padding:36px 0; border-top:1px solid var(--border)}
-    section:first-of-type{border-top:none}
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-primary);
+        }
 
-    .kicker{font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:.25rem}
-    h2{font-size:1.8rem; margin:.15rem 0}
-    .sub{color:var(--muted); max-width:72ch}
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    .grid{display:grid; gap:1rem}
-    @media (min-width:760px){ .cols-2{grid-template-columns:repeat(2,1fr)} }
-    @media (min-width:960px){ .cols-3{grid-template-columns:repeat(3,1fr)} }
-    @media (min-width:1100px){ .cols-4{grid-template-columns:repeat(4,1fr)} }
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(14, 17, 22, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
 
-    .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1rem 1.1rem; box-shadow:var(--shadow)}
+        nav.scrolled {
+            background: rgba(14, 17, 22, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
 
-    .items{list-style:none; margin:0; padding:0; display:grid; gap:.75rem}
-    .items li{display:grid; grid-template-columns:auto 1fr; gap:.75rem; align-items:start}
-    .icon{width:26px; height:26px; border-radius:8px; display:grid; place-items:center; position:relative; background: linear-gradient(135deg, var(--brand), var(--brand-600)); box-shadow: 0 6px 16px rgba(14,165,233,.35)}
-    .icon::after{content:""; width:10px; height:10px; border-radius:3px; background:#001018}
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
 
-    /* Forms */
-    form{display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin-top:.5rem}
-    input[type="email"]{background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:12px; padding:.9rem 1rem; min-width:260px}
-    input[type="email"]::placeholder{color:var(--muted)}
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--green-primary), var(--blue-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .form-msg{margin-top:.5rem}
-    .visually-hidden{clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px}
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
 
-    /* Footer */
-    footer{border-top:1px solid var(--border); background:var(--surface); padding:24px 0}
-    footer .inner{display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; color:var(--muted)}
-  </style>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "MindOrganizer",
-    "applicationCategory": "Productivity",
-    "operatingSystem": "iOS",
-    "isAccessibleForFree": true,
-    "offers": {"@type":"Offer", "price": "0", "priceCurrency":"EUR"},
-    "description": "Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung.",
-    "url": "https://example.com/"
-  }
-  </script>
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--green-primary), var(--blue-primary));
+            color: var(--bg-dark);
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(52, 211, 153, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 120px;
+            padding-bottom: var(--section-padding);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background: radial-gradient(circle at 20% 50%, var(--green-primary) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, var(--blue-primary) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 20%, var(--pink-primary) 0%, transparent 50%);
+            filter: blur(100px);
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border: 2px solid var(--gray-surface);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .secondary-button:hover {
+            background: var(--gray-surface);
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 600px;
+        }
+
+        .phone-mockup {
+            position: absolute;
+            width: 300px;
+            height: 600px;
+            background: var(--surface-dark);
+            border-radius: 40px;
+            padding: 10px;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-darker);
+            border-radius: 30px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* App Demo Placeholder */
+        .app-demo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .demo-phase {
+            background: var(--surface-dark);
+            border-radius: 12px;
+            padding: 15px;
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .demo-phase:nth-child(1) { 
+            animation-delay: 0.2s; 
+            border-left: 3px solid var(--green-primary);
+        }
+        .demo-phase:nth-child(2) { 
+            animation-delay: 0.4s; 
+            border-left: 3px solid var(--orange-primary);
+        }
+        .demo-phase:nth-child(3) { 
+            animation-delay: 0.6s; 
+            border-left: 3px solid var(--pink-primary);
+        }
+        .demo-phase:nth-child(4) { 
+            animation-delay: 0.8s; 
+            border-left: 3px solid var(--blue-primary);
+        }
+        .demo-phase:nth-child(5) { 
+            animation-delay: 1s; 
+            border-left: 3px solid var(--gray-primary);
+        }
+
+        .demo-phase-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .demo-phase-content {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Phases Section */
+        .phases {
+            padding: var(--section-padding) 0;
+            background: var(--bg-darker);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .phase-card {
+            background: var(--surface-dark);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--green-primary);
+        }
+
+        .phase-card.orange::before { background: var(--orange-primary); }
+        .phase-card.pink::before { background: var(--pink-primary); }
+        .phase-card.blue::before { background: var(--blue-primary); }
+        .phase-card.gray::before { background: var(--gray-primary); }
+
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .phase-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: var(--green-tint);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .phase-card.orange .phase-icon { background: var(--orange-tint); }
+        .phase-card.pink .phase-icon { background: var(--pink-tint); }
+        .phase-card.blue .phase-icon { background: var(--blue-tint); }
+        .phase-card.gray .phase-icon { background: var(--gray-tint); }
+
+        .phase-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+        }
+
+        .phase-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Story Section */
+        .story {
+            padding: var(--section-padding) 0;
+        }
+
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .story-text h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .story-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .story-visual {
+            background: var(--surface-dark);
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-animation {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .thought-bubble {
+            background: var(--bg-dark);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .thought-bubble:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .thought-bubble:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: var(--section-padding) 0;
+            background: var(--bg-darker);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: var(--surface-dark);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--green-primary), var(--blue-primary));
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Content Types Section */
+        .content-types {
+            padding: var(--section-padding) 0;
+        }
+
+        .content-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .content-card {
+            background: var(--surface-dark);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .content-card:hover {
+            transform: scale(1.05);
+            background: var(--gray-tint);
+        }
+
+        .content-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .content-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .content-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: var(--section-padding) 0;
+            background: linear-gradient(135deg, var(--green-tint), var(--blue-tint));
+            border-radius: 40px;
+            margin: 80px 20px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .store-badge {
+            background: var(--bg-dark);
+            padding: 15px 30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .store-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .store-badge-icon {
+            font-size: 32px;
+        }
+
+        .store-badge-text {
+            text-align: left;
+        }
+
+        .store-badge-text small {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .store-badge-text strong {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            background: var(--bg-darker);
+            border-top: 1px solid var(--surface-dark);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--green-primary), var(--blue-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid var(--surface-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-tertiary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--green-primary);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-visual {
+                height: 400px;
+            }
+
+            .phone-mockup {
+                width: 250px;
+                height: 500px;
+            }
+
+            .story-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .content-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .phases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading-placeholder {
+            background: var(--gray-surface);
+            border-radius: 8px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+    </style>
 </head>
 <body>
-  <a href="#inhalt" class="skip-link">Zum Inhalt springen</a>
-  <header>
-    <div class="container">
-      <nav aria-label="Hauptnavigation">
-        <div class="logo">
-          <span class="logo-badge" aria-hidden="true"></span>
-          <span>MindOrganizer</span>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">MindOrganizer</div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#workflow">Workflow</a>
+                    <a href="#download">Download</a>
+                    <a href="#" class="cta-button">App Testen</a>
+                </div>
+                <button class="mobile-menu-toggle">☰</button>
+            </div>
         </div>
-        <span class="chip" aria-live="polite">Bald im App Store</span>
-      </nav>
+    </nav>
 
-      <div class="hero">
-        <div>
-          <div class="chip" aria-hidden="true">Produktivität</div>
-          <h1>Ordne deine Gedanken</h1>
-          <p class="lead">Die schnelle, schöne Art, Gedanken festzuhalten und in klare, flexible Sammlungen zu verwandeln – ohne Overhead, ohne Ablenkung.</p>
-          <div class="cta" role="group" aria-label="Aktionen">
-            <a class="btn" href="#waitlist">Werde benachrichtigt</a>
-            <a class="btn ghost" href="#discover">Mehr entdecken</a>
-            <a class="btn subtle" href="#early">Early Access sichern</a>
-          </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Gedanken brauchen Zeit zum Wachsen</h1>
+                    <p>Manchmal ist es nur ein Gedanke. Ein Fahrrad rauscht vorbei und du fragst dich: "Wäre ein eigenes schön?" MindOrganizer gibt deinen Ideen den Raum, den sie verdienen.</p>
+                    <div class="hero-buttons">
+                        <a href="#download" class="cta-button">Jetzt herunterladen</a>
+                        <a href="#demo" class="secondary-button">Demo ansehen</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="app-demo-placeholder">
+                                <div class="demo-phase">
+                                    <div class="demo-phase-title">Sammeln</div>
+                                    <div class="demo-phase-content">Eigenes Fahrrad kaufen?</div>
+                                </div>
+                                <div class="demo-phase">
+                                    <div class="demo-phase-title">Überlegen</div>
+                                    <div class="demo-phase-content">Mountainbike, Budget: max. 800€</div>
+                                </div>
+                                <div class="demo-phase">
+                                    <div class="demo-phase-title">Recherchieren</div>
+                                    <div class="demo-phase-content">3 Favoriten gespeichert</div>
+                                </div>
+                                <div class="demo-phase">
+                                    <div class="demo-phase-title">Umsetzen</div>
+                                    <div class="demo-phase-content">Probefahrt vereinbaren</div>
+                                </div>
+                                <div class="demo-phase">
+                                    <div class="demo-phase-title">Erledigt</div>
+                                    <div class="demo-phase-content">✓ Fahrrad gekauft</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Shots; ersetze Platzhalter durch echte Bilder und füge loading="lazy" hinzu -->
-        <div class="shots" aria-label="App-Screens (Platzhalter)">
-          <div class="shot" aria-label="Sammeln">Sammeln</div>
-          <div class="shot" aria-label="Sammlungen">Sammlungen</div>
-          <div class="shot" aria-label="Aufgaben">Aufgaben</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main id="inhalt" class="container">
-    <!-- Elevator Pitch -->
-    <section id="discover" aria-labelledby="pitch">
-      <div class="kicker">Elevator Pitch</div>
-      <h2 id="pitch">Eingebung → Erkenntnis</h2>
-      <p class="sub">Ob Idee, Fundstück oder Moment: MindOrganizer macht aus Eingebungen verwertbare Erkenntnisse. Text, Fotos, Links und Sprachnotizen fügen sich zu einer leicht navigierbaren Sammlung zusammen – ästhetisch, fokussiert, blitzschnell.</p>
-
-      <div class="grid cols-3" style="margin-top:1rem">
-        <div class="card">
-          <ul class="items">
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Erfassen in Sekunden</strong><br/>Tippen, sprechen, fotografieren – fertig.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Struktur ohne Stress</strong><br/>Übersichtliche Bausteine statt Chaos.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Fokus statt Featuresalat</strong><br/>Das Wesentliche steht im Vordergrund.</div></li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="kicker">Design & Erlebnis</div>
-          <ul class="items">
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Sieht gut, fühlt sich gut an</strong><br/>Modernes iOS-Design mit flüssigen Interaktionen.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>iOS-nativ</strong><br/>Schnell, responsiv, zugänglich.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Ohne Ablenkung</strong><br/>Klarer Look, dezente Animationen, natürliche Gesten.</div></li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="kicker">Privatsphäre</div>
-          <ul class="items">
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Privat zuerst</strong><br/>Verarbeitung direkt auf dem Gerät.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Deine Wahl</strong><br/>Optionale iCloud-Synchronisation – keine Tracker.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Exportfähig</strong><br/>Teilen/Export (z. B. Text/Markdown), wo verfügbar.</div></li>
-          </ul>
-        </div>
-      </div>
     </section>
 
-    <!-- Use-Cases -->
-    <section aria-labelledby="use">
-      <div class="kicker">Anwendungsfälle</div>
-      <h2 id="use">Was du damit machst</h2>
-      <p class="sub">Sammle zuerst, ordne später – ohne Kontextwechsel.</p>
-      <div class="grid cols-4" style="margin-top:1rem">
-        <div class="card"><strong>Ideen & Brainstorms</strong><br/><span class="sub">Gedanken festhalten, weiterdenken</span></div>
-        <div class="card"><strong>Recherche-Sammlungen</strong><br/><span class="sub">Artikel, Notizen, Bilder kuratieren</span></div>
-        <div class="card"><strong>Projekt-Planung</strong><br/><span class="sub">To-Dos, Quellen, Referenzen bündeln</span></div>
-        <div class="card"><strong>Inspiration & Erinnerungen</strong><br/><span class="sub">Fotos & Sprachmemos bewahren</span></div>
-      </div>
-    </section>
-
-    <!-- Features -->
-    <section aria-labelledby="features">
-      <div class="kicker">Funktionen</div>
-      <h2 id="features">Hauptfunktionen</h2>
-      <div class="grid cols-2" style="margin-top:1rem">
-        <div class="card">
-          <ul class="items">
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Erfassen in Blöcken</strong><br/>Text, Fotos (Kamera/Album), Links, Sprachnotizen; Skizzen folgen.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Alles an einem Ort</strong><br/>Sammlungen bleiben übersichtlich und schnell zugänglich.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Reibungslos & schön</strong><br/>Klarer Look, dezente Animationen, natürliche Gesten.</div></li>
-          </ul>
+    <!-- Phases Section -->
+    <section class="phases" id="workflow">
+        <div class="container">
+            <div class="section-header">
+                <h2>Der natürliche Weg deiner Gedanken</h2>
+                <p>Von der spontanen Idee bis zur Umsetzung – in deinem Tempo</p>
+            </div>
+            <div class="phases-grid">
+                <div class="phase-card">
+                    <div class="phase-icon">💡</div>
+                    <h3>Sammeln</h3>
+                    <p>Halte spontane Einfälle fest, ohne sie bewerten zu müssen</p>
+                </div>
+                <div class="phase-card orange">
+                    <div class="phase-icon">🤔</div>
+                    <h3>Überlegen</h3>
+                    <p>Aus der Idee wird eine Absicht – mit Kriterien und Zielen</p>
+                </div>
+                <div class="phase-card pink">
+                    <div class="phase-icon">🔍</div>
+                    <h3>Recherchieren</h3>
+                    <p>Sammle Informationen, Links, Bilder und Notizen</p>
+                </div>
+                <div class="phase-card blue">
+                    <div class="phase-icon">✅</div>
+                    <h3>Umsetzen</h3>
+                    <p>Verwandle deine Recherche in konkrete Aufgaben</p>
+                </div>
+                <div class="phase-card gray">
+                    <div class="phase-icon">🎯</div>
+                    <h3>Erledigt</h3>
+                    <p>Behalte den Überblick über abgeschlossene Projekte</p>
+                </div>
+            </div>
         </div>
-        <div class="card">
-          <ul class="items">
-            <li><span class="icon" aria-hidden="true"></span><div><strong>iOS-nativ</strong><br/>Barrierefreiheit inklusive.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Globale Suche</strong><br/>Finde Einträge über alle Sammlungen hinweg.</div></li>
-            <li><span class="icon" aria-hidden="true"></span><div><strong>Optionaler Sync</strong><br/>iCloud, wenn du möchtest – lokal funktioniert alles.</div></li>
-          </ul>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story">
+        <div class="container">
+            <div class="story-content">
+                <div class="story-text">
+                    <h2>Keine klassische To-Do-App</h2>
+                    <p>MindOrganizer ist ein Raum, in dem Ideen atmen dürfen. Keine starren Projekte, keine Pflichten – nur ein behutsamer Prozess, der aus "vielleicht" einen Plan macht.</p>
+                    <p>Nach ein paar Tagen fragt die App leise: "Ist der Gedanke noch da – oder darf er gehen?" Wenn er bleibt, wächst er behutsam. Du fügst kleine Bausteine hinzu: eine Überschrift, ein paar Kriterien, ein Foto aus dem Laden, einen Link, eine kurze Sprachnotiz.</p>
+                    <p>Schritt für Schritt, in deinem Tempo, bis du irgendwann vor deinem Fahrrad stehst. Nicht weil eine Liste dich trieb – sondern weil ein Gedanke Zeit bekam.</p>
+                </div>
+                <div class="story-visual">
+                    <div class="story-animation">
+                        <div class="thought-bubble">
+                            <strong>Tag 1:</strong> "Ein eigenes Fahrrad wäre cool"
+                        </div>
+                        <div class="thought-bubble">
+                            <strong>Tag 7:</strong> "Mountainbikes gefallen mir"
+                        </div>
+                        <div class="thought-bubble">
+                            <strong>Tag 14:</strong> "Diese drei Modelle sind perfekt"
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- Audience -->
-    <section aria-labelledby="audience">
-      <div class="kicker">Zielgruppen</div>
-      <h2 id="audience">Für wen?</h2>
-      <div class="grid cols-3" style="margin-top:1rem">
-        <div class="card"><strong>Kreativ & Content</strong><br/><span class="sub">Ideen, Skripte, Moodboards</span></div>
-        <div class="card"><strong>Research & Studium</strong><br/><span class="sub">Quellen, Notizen, Paper-Auszüge</span></div>
-        <div class="card"><strong>Produkt & Projekte</strong><br/><span class="sub">To-Dos, Roadmaps, Referenzen</span></div>
-      </div>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Durchdacht bis ins Detail</h2>
+                <p>Alle Funktionen, die du für deinen Gedankenprozess brauchst</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Sanfte Erinnerungen</h3>
+                    <p>Lass dich dezent an deine Gedanken erinnern – ohne Druck, nur als freundlicher Hinweis</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏷️</div>
+                    <h3>Flexible Organisation</h3>
+                    <p>Tags, Kontexte und Listen helfen dir, den Überblick zu behalten – ganz nach deinem System</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>100% Privat</h3>
+                    <p>Alle Daten bleiben auf deinem Gerät. Optional mit iCloud-Sync für deine anderen Geräte</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Dashboard-Übersicht</h3>
+                    <p>Behalte wichtige und fällige Gedanken im Blick – ohne den Wald vor lauter Bäumen zu verlieren</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Fokussiertes Arbeiten</h3>
+                    <p>Klare Phasen helfen dir, zur richtigen Zeit das Richtige zu tun</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">♻️</div>
+                    <h3>Papierkorb</h3>
+                    <p>Gelöschte Gedanken können wiederhergestellt werden – für mehr Sicherheit beim Aufräumen</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Waitlist -->
-    <section id="waitlist" aria-labelledby="cta">
-      <div class="kicker">Benachrichtigung</div>
-      <h2 id="cta">Bald im App Store – werde benachrichtigt</h2>
-      <p class="sub">Trag deine E-Mail ein und erfahre als Erste·r, wenn MindOrganizer verfügbar ist.</p>
-      <form id="waitlist-form" action="/api/waitlist" method="post" aria-label="Warteliste" novalidate>
-        <label for="email" class="sr-only">E-Mail</label>
-        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="dein.name@mail.com" required aria-describedby="email-hint" />
-        <span id="email-hint" class="visually-hidden">Bitte gültige E‑Mail eingeben.</span>
-
-        <!-- Honeypot gegen Bots -->
-        <input type="text" name="website" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
-
-        <button class="btn" type="submit">Benachrichtigen</button>
-        <a class="btn ghost" href="mailto:support@example.com?subject=MindOrganizer%20Early%20Access" rel="noopener noreferrer">Kontakt</a>
-      </form>
-      <div class="form-msg" aria-live="polite" id="form-msg" role="status"></div>
-      <p class="sub">Kein Spam. Abmeldung jederzeit möglich.</p>
+    <!-- Content Types Section -->
+    <section class="content-types">
+        <div class="container">
+            <div class="section-header">
+                <h2>Vielfältige Inhaltsblöcke</h2>
+                <p>Erfasse deine Gedanken so, wie es für dich am besten passt</p>
+            </div>
+            <div class="content-showcase">
+                <div class="content-card">
+                    <div class="content-icon">📝</div>
+                    <h4>Textblöcke</h4>
+                    <p>Für ausführliche Notizen und Überlegungen</p>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">🔗</div>
+                    <h4>Links</h4>
+                    <p>Sammle Favoriten und Quellen</p>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">📸</div>
+                    <h4>Fotos</h4>
+                    <p>Halte visuelle Eindrücke fest</p>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">🎙️</div>
+                    <h4>Sprachnotizen</h4>
+                    <p>Wenn Tippen gerade unpraktisch ist</p>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">✏️</div>
+                    <h4>Skizzen</h4>
+                    <p>Für schnelle Zeichnungen und Ideen</p>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">📑</div>
+                    <h4>Überschriften</h4>
+                    <p>Strukturiere längere Gedanken</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Early Access -->
-    <section id="early" aria-labelledby="early-access">
-      <div class="kicker">Frühstarter·innen</div>
-      <h2 id="early-access">Early Access sichern</h2>
-      <div class="grid cols-3" style="margin-top:1rem">
-        <div class="card"><span class="sub">Zugang zu Beta-Builds</span></div>
-        <div class="card"><span class="sub">Direktes Feedback-Loop</span></div>
-        <div class="card"><span class="sub">Dankeschön in den Release-Notes</span></div>
-      </div>
-      <div class="cta" style="margin-top:1rem">
-        <a class="btn" href="#waitlist">Jetzt vormerken</a>
-        <a class="btn ghost" href="https://apps.apple.com/app/id000000" rel="noopener noreferrer">Später im App Store</a>
-      </div>
+    <!-- CTA Section -->
+    <section class="cta" id="download">
+        <div class="container">
+            <h2>Bereit, deinen Gedanken Raum zu geben?</h2>
+            <p>Lade MindOrganizer herunter und beginne deine Reise</p>
+            <div class="cta-buttons">
+                <a href="#" class="store-badge">
+                    <span class="store-badge-icon">🍎</span>
+                    <div class="store-badge-text">
+                        <small>Download im</small>
+                        <strong>App Store</strong>
+                    </div>
+                </a>
+                <a href="#" class="store-badge">
+                    <span class="store-badge-icon">🤖</span>
+                    <div class="store-badge-text">
+                        <small>Jetzt bei</small>
+                        <strong>Google Play</strong>
+                    </div>
+                </a>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer>
-    <div class="container inner">
-      <a href="#" class="sub">Impressum</a>
-      <a href="#" class="sub">Datenschutz</a>
-      <span aria-hidden="true">•</span>
-      <span class="sub">© <span id="y"></span> MindOrganizer</span>
-    </div>
-  </footer>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>MindOrganizer</h3>
+                    <p>Ein gedankenbasiertes Ordnungs- und Fokus-Tool, das deinen Ideen Zeit zum Wachsen gibt.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Produkt</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#workflow">Workflow</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="#">Preise</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Hilfe</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Rechtliches</h4>
+                    <ul>
+                        <li><a href="/datenschutz">Datenschutz</a></li>
+                        <li><a href="#">Impressum</a></li>
+                        <li><a href="#">Nutzungsbedingungen</a></li>
+                        <li><a href="#">Lizenz</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MindOrganizer. Alle Rechte vorbehalten.</p>
+                <div class="social-links">
+                    <a href="#">𝕏</a>
+                    <a href="#">📧</a>
+                    <a href="#">💬</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-  <noscript>MindOrganizer funktioniert auch ohne JavaScript – für Formular-Feedback und Analytics (falls aktiviert) sind Skripte hilfreich.</noscript>
-  <script>
-    // Kleines Progressive-Enhancement fürs Formular (Client-Fehlerfeedback, Doppel-Submit verhindern)
-    (function(){
-      const form = document.getElementById('waitlist-form');
-      const msg = document.getElementById('form-msg');
-      const year = document.getElementById('y');
-      if (year) year.textContent = new Date().getFullYear();
-      if (!form) return;
-      let busy = false;
-      form.addEventListener('submit', async (e) => {
-        if (busy) { e.preventDefault(); return; }
-        const hp = form.querySelector('input[name="website"]').value;
-        if (hp) { e.preventDefault(); return; }
-        const email = form.email.value.trim();
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          e.preventDefault();
-          msg.textContent = 'Bitte gib eine gültige E‑Mail-Adresse ein.';
-          return;
-        }
-        busy = true;
-        form.querySelector('button[type="submit"]').setAttribute('disabled','true');
-        msg.textContent = 'Sende…';
-        // Optional: fetch statt klassisches POST
-        e.preventDefault();
-        try{
-          const res = await fetch(form.action, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email})});
-          if(!res.ok) throw new Error('Fehler');
-          msg.textContent = 'Danke! Du stehst jetzt auf der Liste.';
-          form.reset();
-        }catch(err){
-          msg.textContent = 'Leider hat das nicht geklappt. Versuch es später noch einmal.';
-        }finally{
-          busy = false;
-          form.querySelector('button[type="submit"]').removeAttribute('disabled');
-        }
-      });
-    })();
-  </script>
-  <!-- Sicherheit (empfohlen als HTTP-Header, hier nur referenziert):
-    Content-Security-Policy: default-src 'self'; img-src 'self' https: data:; connect-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; frame-ancestors 'none';
-    Referrer-Policy: no-referrer-when-downgrade
-    Permissions-Policy: microphone=(), camera=(), geolocation=()
-  -->
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle (placeholder functionality)
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            alert('Mobile Menü würde hier geöffnet werden');
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards
+        document.querySelectorAll('.feature-card, .phase-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
