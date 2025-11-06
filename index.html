@@ -141,6 +141,38 @@
             color: var(--text-primary);
         }
 
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+            background: var(--surface-dark);
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        .language-switcher button {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .language-switcher button:hover {
+            color: var(--text-primary);
+            background: var(--gray-tint);
+        }
+
+        .language-switcher button.active {
+            background: linear-gradient(135deg, var(--green-primary), var(--blue-primary));
+            color: var(--bg-dark);
+        }
+
         .cta-button {
             background: linear-gradient(135deg, var(--green-primary), var(--blue-primary));
             color: var(--bg-dark);
@@ -159,7 +191,7 @@
 
         /* Hero Section */
         .hero {
-            padding-top: 120px;
+            padding-top: 160px;
             padding-bottom: var(--section-padding);
             min-height: 100vh;
             display: flex;
@@ -198,6 +230,27 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        /* Animated Text Effect */
+        .animated-text {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--green-primary), var(--blue-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-text p {
@@ -432,6 +485,22 @@
             font-size: 1.1rem;
             line-height: 1.8;
             margin-bottom: 20px;
+        }
+
+        /* Progressive Text Highlight */
+        .highlight-text {
+            font-size: 1.4rem;
+            line-height: 2;
+            color: var(--text-tertiary);
+        }
+
+        .highlight-text .word {
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .highlight-text .word.highlighted {
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
         }
 
         .story-visual {
@@ -780,10 +849,15 @@
             <div class="nav-container">
                 <div class="logo">MindOrganizer</div>
                 <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#workflow">Workflow</a>
-                    <a href="#download">Download</a>
-                    <a href="#" class="cta-button">App Testen</a>
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="de">DE</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="fr">FR</button>
+                    </div>
+                    <a href="#features" data-i18n="nav.features">Features</a>
+                    <a href="#workflow" data-i18n="nav.workflow">Workflow</a>
+                    <a href="#roadmap" data-i18n="nav.roadmap">Updates</a>
+                    <a href="#download" class="cta-button" data-i18n="nav.download">App Downloaden</a>
                 </div>
                 <button class="mobile-menu-toggle">☰</button>
             </div>
@@ -796,11 +870,10 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Gedanken brauchen Zeit zum Wachsen</h1>
-                    <p>Manchmal ist es nur ein Gedanke. Ein Fahrrad rauscht vorbei und du fragst dich: "Wäre ein eigenes schön?" MindOrganizer gibt deinen Ideen den Raum, den sie verdienen.</p>
+                    <h1>Gedanken brauchen <span class="animated-text" id="animated-text">Zeit zum Wachsen</span></h1>
+                    <p data-i18n="hero.subtitle">Manchmal ist es nur ein Gedanke. Ein Fahrrad rauscht vorbei und du fragst dich: "Wäre ein eigenes schön?" MindOrganizer gibt deinen Ideen den Raum, den sie verdienen.</p>
                     <div class="hero-buttons">
-                        <a href="#download" class="cta-button">Jetzt herunterladen</a>
-                        <a href="#demo" class="secondary-button">Demo ansehen</a>
+                        <a href="#download" class="cta-button" data-i18n="hero.cta">App Downloaden</a>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -877,10 +950,8 @@
         <div class="container">
             <div class="story-content">
                 <div class="story-text">
-                    <h2>Keine klassische To-Do-App</h2>
-                    <p>MindOrganizer ist ein Raum, in dem Ideen atmen dürfen. Keine starren Projekte, keine Pflichten – nur ein behutsamer Prozess, der aus "vielleicht" einen Plan macht.</p>
-                    <p>Nach ein paar Tagen fragt die App leise: "Ist der Gedanke noch da – oder darf er gehen?" Wenn er bleibt, wächst er behutsam. Du fügst kleine Bausteine hinzu: eine Überschrift, ein paar Kriterien, ein Foto aus dem Laden, einen Link, eine kurze Sprachnotiz.</p>
-                    <p>Schritt für Schritt, in deinem Tempo, bis du irgendwann vor deinem Fahrrad stehst. Nicht weil eine Liste dich trieb – sondern weil ein Gedanke Zeit bekam.</p>
+                    <h2 data-i18n="story.title">Keine klassische To-Do-App</h2>
+                    <p class="highlight-text" id="highlight-paragraph">MindOrganizer ist ein Raum, in dem Ideen atmen dürfen. Keine starren Projekte, keine Pflichten – nur ein behutsamer Prozess, der aus "vielleicht" einen Plan macht. Nach ein paar Tagen fragt die App leise: "Ist der Gedanke noch da – oder darf er gehen?" Wenn er bleibt, wächst er behutsam. Du fügst kleine Bausteine hinzu: eine Überschrift, ein paar Kriterien, ein Foto aus dem Laden, einen Link, eine kurze Sprachnotiz. Schritt für Schritt, in deinem Tempo, bis du irgendwann vor deinem Fahrrad stehst. Nicht weil eine Liste dich trieb – sondern weil ein Gedanke Zeit bekam.</p>
                 </div>
                 <div class="story-visual">
                     <div class="story-animation">
@@ -986,23 +1057,54 @@
     <!-- CTA Section -->
     <section class="cta" id="download">
         <div class="container">
-            <h2>Bereit, deinen Gedanken Raum zu geben?</h2>
-            <p>Lade MindOrganizer herunter und beginne deine Reise</p>
+            <h2 data-i18n="cta.title">Bereit, deinen Gedanken Raum zu geben?</h2>
+            <p data-i18n="cta.subtitle">Lade MindOrganizer herunter und beginne deine Reise</p>
             <div class="cta-buttons">
-                <a href="#" class="store-badge">
-                    <span class="store-badge-icon">🍎</span>
-                    <div class="store-badge-text">
-                        <small>Download im</small>
-                        <strong>App Store</strong>
-                    </div>
+                <a href="#" class="store-badge" id="app-store-badge">
+                    <img src="./assets/badges/app-store-de.svg" alt="Download on the App Store" height="50" id="app-store-img">
                 </a>
-                <a href="#" class="store-badge">
-                    <span class="store-badge-icon">🤖</span>
-                    <div class="store-badge-text">
-                        <small>Jetzt bei</small>
-                        <strong>Google Play</strong>
-                    </div>
-                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="features" id="roadmap" style="background: var(--bg-dark);">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="roadmap.title">Roadmap & Updates</h2>
+                <p data-i18n="roadmap.subtitle">Was kommt als Nächstes?</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" style="border: 2px solid var(--green-primary);">
+                    <div class="feature-icon" style="background: var(--green-tint);">💾</div>
+                    <h3 data-i18n="roadmap.backup.title">Backup & Export</h3>
+                    <p data-i18n="roadmap.backup.desc">In Entwicklung: Sichere deine Daten offline und importiere sie auf anderen Geräten. Deine Gedanken bleiben immer bei dir.</p>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--green-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">🔨 In Arbeit</div>
+                </div>
+                <div class="feature-card" style="border: 2px solid var(--green-primary);">
+                    <div class="feature-icon" style="background: var(--green-tint);">☑️</div>
+                    <h3 data-i18n="roadmap.checkbox.title">Checkbox-Listen</h3>
+                    <p data-i18n="roadmap.checkbox.desc">In Entwicklung: Erstelle Checklisten und hake Aufgaben ab. Perfekt für strukturierte To-Dos innerhalb deiner Gedanken.</p>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--green-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">🔨 In Arbeit</div>
+                </div>
+                <div class="feature-card" style="border: 2px solid var(--blue-primary);">
+                    <div class="feature-icon" style="background: var(--blue-tint);">🏠</div>
+                    <h3 data-i18n="roadmap.dashboard.title">Dashboard-Start</h3>
+                    <p data-i18n="roadmap.dashboard.desc">Geplant: Starte die App direkt im Dashboard, nicht nur in einer bestimmten Liste. Mehr Flexibilität für deinen Workflow.</p>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--blue-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">📋 Geplant</div>
+                </div>
+                <div class="feature-card" style="border: 2px solid var(--orange-primary); opacity: 0.8;">
+                    <div class="feature-icon" style="background: var(--orange-tint);">🧠</div>
+                    <h3 data-i18n="roadmap.ai.title">Apple Intelligence Integration</h3>
+                    <p data-i18n="roadmap.ai.desc">Vielleicht: Beschreibe deine Notizen grob und lass Apple Intelligence sie strukturiert und schön formatiert ausgeben.</p>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--orange-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">💭 Ungewiss</div>
+                </div>
+                <div class="feature-card" style="border: 2px solid var(--orange-primary); opacity: 0.8;">
+                    <div class="feature-icon" style="background: var(--orange-tint);">💬</div>
+                    <h3 data-i18n="roadmap.chatgpt.title">ChatGPT/Claude Integration</h3>
+                    <p data-i18n="roadmap.chatgpt.desc">Vielleicht: Diktiere oder beschreibe Listen und Checklisten. KI-Assistenten packen deine Gedanken automatisch in die richtige Form.</p>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--orange-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">💭 Ungewiss</div>
+                </div>
             </div>
         </div>
     </section>
@@ -1025,12 +1127,12 @@
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h4>Support</h4>
+                    <h4 data-i18n="footer.support">Support</h4>
                     <ul>
-                        <li><a href="#">Hilfe</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Kontakt</a></li>
-                        <li><a href="#">Updates</a></li>
+                        <li><a href="#" data-i18n="footer.help">Hilfe</a></li>
+                        <li><a href="#" data-i18n="footer.faq">FAQ</a></li>
+                        <li><a href="#" data-i18n="footer.contact">Kontakt</a></li>
+                        <li><a href="#roadmap" data-i18n="footer.updates">Updates</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -1055,7 +1157,212 @@
     </footer>
 
     <script>
-        // Navigation scroll effect
+        // ===== TRANSLATIONS =====
+        const translations = {
+            de: {
+                'nav.features': 'Features',
+                'nav.workflow': 'Workflow',
+                'nav.roadmap': 'Updates',
+                'nav.download': 'App Downloaden',
+                'hero.subtitle': 'Manchmal ist es nur ein Gedanke. Ein Fahrrad rauscht vorbei und du fragst dich: "Wäre ein eigenes schön?" MindOrganizer gibt deinen Ideen den Raum, den sie verdienen.',
+                'hero.cta': 'App Downloaden',
+                'story.title': 'Keine klassische To-Do-App',
+                'cta.title': 'Bereit, deinen Gedanken Raum zu geben?',
+                'cta.subtitle': 'Lade MindOrganizer herunter und beginne deine Reise',
+                'roadmap.title': 'Roadmap & Updates',
+                'roadmap.subtitle': 'Was kommt als Nächstes?',
+                'roadmap.backup.title': 'Backup & Export',
+                'roadmap.backup.desc': 'In Entwicklung: Sichere deine Daten offline und importiere sie auf anderen Geräten. Deine Gedanken bleiben immer bei dir.',
+                'roadmap.checkbox.title': 'Checkbox-Listen',
+                'roadmap.checkbox.desc': 'In Entwicklung: Erstelle Checklisten und hake Aufgaben ab. Perfekt für strukturierte To-Dos innerhalb deiner Gedanken.',
+                'roadmap.dashboard.title': 'Dashboard-Start',
+                'roadmap.dashboard.desc': 'Geplant: Starte die App direkt im Dashboard, nicht nur in einer bestimmten Liste. Mehr Flexibilität für deinen Workflow.',
+                'roadmap.ai.title': 'Apple Intelligence Integration',
+                'roadmap.ai.desc': 'Vielleicht: Beschreibe deine Notizen grob und lass Apple Intelligence sie strukturiert und schön formatiert ausgeben.',
+                'roadmap.chatgpt.title': 'ChatGPT/Claude Integration',
+                'roadmap.chatgpt.desc': 'Vielleicht: Diktiere oder beschreibe Listen und Checklisten. KI-Assistenten packen deine Gedanken automatisch in die richtige Form.',
+                'footer.support': 'Support',
+                'footer.help': 'Hilfe',
+                'footer.faq': 'FAQ',
+                'footer.contact': 'Kontakt',
+                'footer.updates': 'Updates',
+                'animatedTexts': ['Zeit zum Wachsen', 'Raum zum Atmen', 'Freiheit zu Reifen', 'Geduld zu Werden']
+            },
+            en: {
+                'nav.features': 'Features',
+                'nav.workflow': 'Workflow',
+                'nav.roadmap': 'Updates',
+                'nav.download': 'Download App',
+                'hero.subtitle': 'Sometimes it\'s just a thought. A bicycle rushes by and you wonder: "Would having my own be nice?" MindOrganizer gives your ideas the space they deserve.',
+                'hero.cta': 'Download App',
+                'story.title': 'Not a Classic To-Do App',
+                'cta.title': 'Ready to Give Your Thoughts Space?',
+                'cta.subtitle': 'Download MindOrganizer and start your journey',
+                'roadmap.title': 'Roadmap & Updates',
+                'roadmap.subtitle': 'What\'s Coming Next?',
+                'roadmap.backup.title': 'Backup & Export',
+                'roadmap.backup.desc': 'In Development: Secure your data offline and import it on other devices. Your thoughts always stay with you.',
+                'roadmap.checkbox.title': 'Checkbox Lists',
+                'roadmap.checkbox.desc': 'In Development: Create checklists and tick off tasks. Perfect for structured to-dos within your thoughts.',
+                'roadmap.dashboard.title': 'Dashboard Start',
+                'roadmap.dashboard.desc': 'Planned: Start the app directly in the dashboard, not just in a specific list. More flexibility for your workflow.',
+                'roadmap.ai.title': 'Apple Intelligence Integration',
+                'roadmap.ai.desc': 'Maybe: Describe your notes roughly and let Apple Intelligence output them structured and beautifully formatted.',
+                'roadmap.chatgpt.title': 'ChatGPT/Claude Integration',
+                'roadmap.chatgpt.desc': 'Maybe: Dictate or describe lists and checklists. AI assistants automatically put your thoughts into the right form.',
+                'footer.support': 'Support',
+                'footer.help': 'Help',
+                'footer.faq': 'FAQ',
+                'footer.contact': 'Contact',
+                'footer.updates': 'Updates',
+                'animatedTexts': ['Time to Grow', 'Space to Breathe', 'Freedom to Mature', 'Patience to Become']
+            },
+            fr: {
+                'nav.features': 'Fonctionnalités',
+                'nav.workflow': 'Flux de travail',
+                'nav.roadmap': 'Mises à jour',
+                'nav.download': 'Télécharger',
+                'hero.subtitle': 'Parfois, c\'est juste une pensée. Un vélo passe et vous vous demandez: "Ce serait bien d\'en avoir un?" MindOrganizer donne à vos idées l\'espace qu\'elles méritent.',
+                'hero.cta': 'Télécharger',
+                'story.title': 'Pas une Application To-Do Classique',
+                'cta.title': 'Prêt à Donner de l\'Espace à Vos Pensées?',
+                'cta.subtitle': 'Téléchargez MindOrganizer et commencez votre voyage',
+                'roadmap.title': 'Feuille de Route & Mises à Jour',
+                'roadmap.subtitle': 'Qu\'est-ce qui Arrive Ensuite?',
+                'roadmap.backup.title': 'Sauvegarde & Export',
+                'roadmap.backup.desc': 'En Développement: Sécurisez vos données hors ligne et importez-les sur d\'autres appareils. Vos pensées restent toujours avec vous.',
+                'roadmap.checkbox.title': 'Listes à Cocher',
+                'roadmap.checkbox.desc': 'En Développement: Créez des listes de contrôle et cochez les tâches. Parfait pour les tâches structurées dans vos pensées.',
+                'roadmap.dashboard.title': 'Démarrage Dashboard',
+                'roadmap.dashboard.desc': 'Prévu: Démarrez l\'application directement dans le tableau de bord, pas seulement dans une liste spécifique. Plus de flexibilité pour votre flux de travail.',
+                'roadmap.ai.title': 'Intégration Apple Intelligence',
+                'roadmap.ai.desc': 'Peut-être: Décrivez vos notes grossièrement et laissez Apple Intelligence les sortir structurées et joliment formatées.',
+                'roadmap.chatgpt.title': 'Intégration ChatGPT/Claude',
+                'roadmap.chatgpt.desc': 'Peut-être: Dictez ou décrivez des listes et des listes de contrôle. Les assistants IA mettent automatiquement vos pensées dans la bonne forme.',
+                'footer.support': 'Support',
+                'footer.help': 'Aide',
+                'footer.faq': 'FAQ',
+                'footer.contact': 'Contact',
+                'footer.updates': 'Mises à jour',
+                'animatedTexts': ['Temps de Croître', 'Espace pour Respirer', 'Liberté de Mûrir', 'Patience de Devenir']
+            }
+        };
+
+        let currentLang = 'de';
+
+        // ===== LANGUAGE SWITCHER =====
+        function setLanguage(lang) {
+            currentLang = lang;
+
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update App Store badge
+            const badgeImg = document.getElementById('app-store-img');
+            if (badgeImg) {
+                badgeImg.src = `./assets/badges/app-store-${lang}.svg`;
+            }
+
+            // Restart animated text
+            startAnimatedText();
+        }
+
+        // Language switcher event listeners
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+
+        // ===== ANIMATED TEXT IN HERO =====
+        let animatedTextIndex = 0;
+        let animatedTextInterval;
+
+        function startAnimatedText() {
+            const animatedTextElement = document.getElementById('animated-text');
+            if (!animatedTextElement) return;
+
+            clearInterval(animatedTextInterval);
+
+            const texts = translations[currentLang].animatedTexts;
+            animatedTextIndex = 0;
+
+            animatedTextInterval = setInterval(() => {
+                animatedTextIndex = (animatedTextIndex + 1) % texts.length;
+                animatedTextElement.textContent = texts[animatedTextIndex];
+            }, 3000);
+        }
+
+        // ===== PROGRESSIVE TEXT HIGHLIGHT =====
+        function setupTextHighlight() {
+            const paragraph = document.getElementById('highlight-paragraph');
+            if (!paragraph) return;
+
+            const text = paragraph.textContent;
+            const words = text.split(' ');
+
+            paragraph.innerHTML = words.map((word, i) =>
+                `<span class="word" data-index="${i}">${word}</span>`
+            ).join(' ');
+
+            const wordElements = paragraph.querySelectorAll('.word');
+
+            window.addEventListener('scroll', () => {
+                const rect = paragraph.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+
+                // Calculate scroll progress through the paragraph
+                const start = rect.top;
+                const end = rect.bottom;
+
+                if (start < windowHeight && end > 0) {
+                    const progress = Math.max(0, Math.min(1, (windowHeight - start) / (windowHeight + rect.height)));
+                    const wordsToHighlight = Math.floor(progress * wordElements.length);
+
+                    wordElements.forEach((word, i) => {
+                        if (i < wordsToHighlight) {
+                            word.classList.add('highlighted');
+                        } else {
+                            word.classList.remove('highlighted');
+                        }
+                    });
+                }
+            });
+        }
+
+        // ===== PARALLAX EFFECTS =====
+        function setupParallax() {
+            const heroBackground = document.querySelector('.hero-background');
+            const phoneVisual = document.querySelector('.phone-mockup');
+
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+
+                if (heroBackground) {
+                    heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+                }
+
+                if (phoneVisual && scrolled < 800) {
+                    phoneVisual.style.transform = `translateX(-50%) translateY(${scrolled * 0.3}px) rotateY(${scrolled * 0.02}deg)`;
+                }
+            });
+        }
+
+        // ===== NAVIGATION SCROLL EFFECT =====
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -1065,7 +1372,7 @@
             }
         });
 
-        // Smooth scroll for anchor links
+        // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1079,12 +1386,12 @@
             });
         });
 
-        // Mobile menu toggle (placeholder functionality)
+        // ===== MOBILE MENU TOGGLE =====
         document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
             alert('Mobile Menü würde hier geöffnet werden');
         });
 
-        // Intersection Observer for animations
+        // ===== INTERSECTION OBSERVER FOR ANIMATIONS =====
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -1105,6 +1412,13 @@
             card.style.transform = 'translateY(20px)';
             card.style.transition = 'all 0.6s ease-out';
             observer.observe(card);
+        });
+
+        // ===== INITIALIZE ALL EFFECTS =====
+        document.addEventListener('DOMContentLoaded', function() {
+            startAnimatedText();
+            setupTextHighlight();
+            setupParallax();
         });
     </script>
 </body>
