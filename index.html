@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -77,17 +77,35 @@
         }
 
         body {
-            font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            font-weight: 400;
         }
 
-        /* Enhanced Typography */
-        h1, h2, h3 {
-            font-family: 'Fraunces', 'Space Grotesk', serif;
+        /* Enhanced Typography - Clean & Professional */
+        h1 {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
             font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-weight: 600;
+        }
+
+        p {
+            font-weight: 400;
+        }
+
+        .text-light {
+            font-weight: 300;
         }
 
         /* Smooth Scrolling */
@@ -686,8 +704,9 @@
         }
 
         .content-card:hover {
-            transform: scale(1.05);
-            background: var(--gray-tint);
+            transform: translateY(-5px);
+            background: var(--surface-light);
+            box-shadow: var(--shadow-md);
         }
 
         .content-icon {
@@ -922,8 +941,7 @@
 
         /* ===== PARALLAX TEXT REVEAL SECTION ===== */
         .parallax-text-reveal {
-            min-height: 200vh;
-            padding: 20vh 0;
+            min-height: 300vh;
             position: relative;
             display: flex;
             align-items: center;
@@ -932,34 +950,41 @@
 
         .reveal-text-container {
             position: sticky;
-            top: 25vh;
-            max-width: 900px;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 40px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .reveal-text {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(1.8rem, 3.5vw, 3rem);
-            line-height: 1.8;
-            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+            line-height: 1.5;
+            font-weight: 400;
             text-align: center;
         }
 
         .reveal-text .line {
-            display: block;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             color: var(--gray-surface);
         }
 
         .reveal-text .line.revealed {
             color: var(--text-primary);
-            text-shadow: 0 0 40px rgba(52, 211, 153, 0.15);
+            text-shadow: 0 0 30px rgba(52, 211, 153, 0.1);
+            font-weight: 500;
         }
 
         .reveal-text .line.fully-revealed {
             color: var(--text-primary);
-            text-shadow: 0 0 60px rgba(52, 211, 153, 0.3);
+            text-shadow: 0 0 40px rgba(52, 211, 153, 0.2);
+            font-weight: 600;
         }
 
         /* Grid showcase for content types - improved */
@@ -1078,24 +1103,7 @@
     <section class="parallax-text-reveal">
         <div class="reveal-text-container">
             <div class="reveal-text" id="reveal-text">
-                <span class="line">Manchmal ist es nur ein Gedanke.</span>
-                <span class="line">Du gehst eine Straße entlang, ein Fahrrad rauscht vorbei –</span>
-                <span class="line">und plötzlich fragst du dich: „Wäre ein eigenes schön?"</span>
-                <span class="line">In MindOrganizer hältst du diesen Moment fest.</span>
-                <span class="line">Ohne Bewertung. Kein To-do, keine Pflicht. Nur ein Impuls.</span>
-                <span class="line">Nach ein paar Tagen fragt die App leise:</span>
-                <span class="line">„Ist der Gedanke noch da – oder darf er gehen?"</span>
-                <span class="line">Wenn er bleibt, wächst er behutsam.</span>
-                <span class="line">Du fügst kleine Bausteine hinzu:</span>
-                <span class="line">eine Überschrift, ein paar Kriterien, ein Foto aus dem Laden,</span>
-                <span class="line">einen Link, eine kurze Sprachnotiz.</span>
-                <span class="line">Schritt für Schritt wird aus „vielleicht" ein Plan.</span>
-                <span class="line">MindOrganizer ist keine klassische To-Do- oder Notizen-App.</span>
-                <span class="line">Es ist ein Raum, in dem Ideen atmen dürfen,</span>
-                <span class="line">bis sie klar genug sind, Wirklichkeit zu werden.</span>
-                <span class="line">Und irgendwann stehst du vor deinem Fahrrad.</span>
-                <span class="line">Nicht, weil eine Liste dich trieb –</span>
-                <span class="line">sondern weil ein Gedanke Zeit bekam.</span>
+                <span class="line">Manchmal ist es nur ein Gedanke. </span><span class="line">Du gehst eine Straße entlang, ein Fahrrad rauscht vorbei – </span><span class="line">und plötzlich fragst du dich: „Wäre ein eigenes schön?" </span><span class="line">In MindOrganizer hältst du diesen Moment fest. </span><span class="line">Ohne Bewertung. Kein To-do, keine Pflicht. Nur ein Impuls. </span><span class="line">Nach ein paar Tagen fragt die App leise: </span><span class="line">„Ist der Gedanke noch da – oder darf er gehen?" </span><span class="line">Wenn er bleibt, wächst er behutsam. </span><span class="line">Du fügst kleine Bausteine hinzu: </span><span class="line">eine Überschrift, ein paar Kriterien, ein Foto aus dem Laden, </span><span class="line">einen Link, eine kurze Sprachnotiz. </span><span class="line">Schritt für Schritt wird aus „vielleicht" ein Plan. </span><span class="line">MindOrganizer ist keine klassische To-Do- oder Notizen-App. </span><span class="line">Es ist ein Raum, in dem Ideen atmen dürfen, </span><span class="line">bis sie klar genug sind, Wirklichkeit zu werden. </span><span class="line">Und irgendwann stehst du vor deinem Fahrrad. </span><span class="line">Nicht, weil eine Liste dich trieb – </span><span class="line">sondern weil ein Gedanke Zeit bekam.</span>
             </div>
         </div>
     </section>
@@ -1205,7 +1213,7 @@
                     <h4>Überschriften</h4>
                     <p>Strukturiere längere Gedanken</p>
                 </div>
-                <div class="content-card" style="border: 2px solid var(--green-primary);">
+                <div class="content-card">
                     <div class="content-icon">☑️</div>
                     <h4>Checklisten</h4>
                     <p>To-Dos und Aufgaben zum Abhaken</p>
@@ -1346,7 +1354,7 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Kontakt',
                 'footer.updates': 'Updates',
-                'animatedTexts': ['Zeit zum Wachsen', 'Raum zum Atmen', 'Freiheit zu Reifen', 'Geduld zu Werden']
+                'animatedTexts': ['Zeit zum Wachsen', 'Raum zum Atmen', 'Freiheit zu Reifen', 'Ruhe zum Entstehen']
             },
             en: {
                 'nav.features': 'Features',
@@ -1375,7 +1383,7 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Contact',
                 'footer.updates': 'Updates',
-                'animatedTexts': ['Time to Grow', 'Space to Breathe', 'Freedom to Mature', 'Patience to Become']
+                'animatedTexts': ['Time to Grow', 'Space to Breathe', 'Freedom to Mature', 'Peace to Emerge']
             },
             fr: {
                 'nav.features': 'Fonctionnalités',
@@ -1404,7 +1412,7 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Contact',
                 'footer.updates': 'Mises à jour',
-                'animatedTexts': ['Temps de Croître', 'Espace pour Respirer', 'Liberté de Mûrir', 'Patience de Devenir']
+                'animatedTexts': ['Temps de Croître', 'Espace pour Respirer', 'Liberté de Mûrir', 'Calme pour Naître']
             }
         };
 
