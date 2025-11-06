@@ -18,11 +18,11 @@
         }
 
         :root {
-            /* Base Canvas */
-            --bg-dark: #0A0A0B;
-            --bg-darker: #060809;
-            --surface-dark: #151820;
-            --surface-light: #1E2229;
+            /* Base Canvas - Lighter */
+            --bg-dark: #0D0F12;
+            --bg-darker: #0A0A0B;
+            --surface-dark: #181C22;
+            --surface-light: #21262E;
 
             /* Premium Phase Colors - Dark Mode Optimized */
 
@@ -479,31 +479,25 @@
         }
 
         .phase-card {
-            background: var(--surface-dark);
+            background: var(--green-primary);
             border-radius: 20px;
             padding: 40px 30px;
             text-align: center;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
+            border: none;
         }
 
-        /* Top border for phase cards */
+        .phase-card.amber { background: var(--amber-primary); }
+        .phase-card.purple { background: var(--purple-primary); }
+        .phase-card.blue { background: var(--blue-primary); }
+        .phase-card.slate { background: var(--slate-primary); }
+
+        /* Remove top border - not needed anymore */
         .phase-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--green-primary);
-            z-index: 2;
+            display: none;
         }
-
-        .phase-card.amber::before { background: var(--amber-primary); }
-        .phase-card.purple::before { background: var(--purple-primary); }
-        .phase-card.blue::before { background: var(--blue-primary); }
-        .phase-card.slate::before { background: var(--slate-primary); }
 
         /* Ensure content is above the wave */
         .phase-card > * {
@@ -512,35 +506,34 @@
         }
 
         .phase-card:hover {
-            transform: translateY(-8px);
             box-shadow: var(--shadow-lg);
         }
 
         .phase-card.green:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(16, 185, 129, 0.25);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(16, 185, 129, 0.4);
         }
 
         .phase-card.amber:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(251, 191, 36, 0.25);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(251, 191, 36, 0.4);
         }
 
         .phase-card.purple:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(167, 139, 250, 0.25);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(167, 139, 250, 0.4);
         }
 
         .phase-card.blue:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(96, 165, 250, 0.25);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(96, 165, 250, 0.4);
         }
 
         .phase-card.slate:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(148, 163, 184, 0.2);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(148, 163, 184, 0.3);
         }
 
         .phase-icon {
             width: 60px;
             height: 60px;
             margin: 0 auto 20px;
-            background: var(--green-surface);
+            background: #0A0A0B;
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -548,20 +541,18 @@
             font-size: 24px;
         }
 
-        .phase-card.amber .phase-icon { background: var(--amber-surface); }
-        .phase-card.purple .phase-icon { background: var(--purple-surface); }
-        .phase-card.blue .phase-icon { background: var(--blue-surface); }
-        .phase-card.slate .phase-icon { background: var(--slate-surface); }
-
         .phase-card h3 {
             font-size: 1.25rem;
             margin-bottom: 15px;
+            color: #0A0A0B;
+            font-weight: 700;
         }
 
         .phase-card p {
-            color: var(--text-secondary);
+            color: #0A0A0B;
             font-size: 0.95rem;
             line-height: 1.6;
+            opacity: 0.8;
         }
 
         /* Story Section */
@@ -949,12 +940,12 @@
 
         /* ===== PARALLAX TEXT REVEAL SECTION ===== */
         .parallax-text-reveal {
-            min-height: 250vh;
+            min-height: 300vh;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10vh 0;
+            padding: 5vh 0;
         }
 
         .reveal-text-container {
@@ -980,23 +971,23 @@
 
         .reveal-text .line {
             display: inline;
-            transition: color 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-                        font-weight 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-                        text-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: color 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+                        text-shadow 0.8s cubic-bezier(0.23, 1, 0.32, 1);
             color: #2A2A2C;
-            will-change: color, font-weight;
+            font-weight: 400;
+            will-change: color;
         }
 
         .reveal-text .line.revealed {
-            color: #D1D5DB;
+            color: #9CA3AF;
             text-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .reveal-text .line.fully-revealed {
             color: var(--text-primary);
             text-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
-            font-weight: 600;
+            font-weight: 400;
         }
 
         /* Grid showcase for content types - improved */
@@ -1255,35 +1246,17 @@
                 <p data-i18n="roadmap.subtitle">Was kommt als Nächstes?</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card" style="border: 2px solid var(--green-primary);">
-                    <div class="feature-icon" style="background: var(--green-tint);">💾</div>
-                    <h3 data-i18n="roadmap.backup.title">Backup & Export</h3>
-                    <p data-i18n="roadmap.backup.desc">In Entwicklung: Sichere deine Daten offline und importiere sie auf anderen Geräten. Deine Gedanken bleiben immer bei dir.</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--green-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">🔨 In Arbeit</div>
-                </div>
-                <div class="feature-card" style="border: 2px solid var(--green-primary);">
-                    <div class="feature-icon" style="background: var(--green-tint);">☑️</div>
-                    <h3 data-i18n="roadmap.checkbox.title">Checkbox-Listen</h3>
-                    <p data-i18n="roadmap.checkbox.desc">In Entwicklung: Erstelle Checklisten und hake Aufgaben ab. Perfekt für strukturierte To-Dos innerhalb deiner Gedanken.</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--green-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">🔨 In Arbeit</div>
-                </div>
-                <div class="feature-card" style="border: 2px solid var(--blue-primary);">
-                    <div class="feature-icon" style="background: var(--blue-tint);">🏠</div>
-                    <h3 data-i18n="roadmap.dashboard.title">Dashboard-Start</h3>
-                    <p data-i18n="roadmap.dashboard.desc">Geplant: Starte die App direkt im Dashboard, nicht nur in einer bestimmten Liste. Mehr Flexibilität für deinen Workflow.</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--blue-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">📋 Geplant</div>
-                </div>
-                <div class="feature-card" style="border: 2px solid var(--orange-primary); opacity: 0.8;">
-                    <div class="feature-icon" style="background: var(--orange-tint);">🧠</div>
+                <div class="feature-card" style="border: 2px solid var(--amber-primary); opacity: 0.8;">
+                    <div class="feature-icon" style="background: var(--amber-surface);">🧠</div>
                     <h3 data-i18n="roadmap.ai.title">Apple Intelligence Integration</h3>
                     <p data-i18n="roadmap.ai.desc">Vielleicht: Beschreibe deine Notizen grob und lass Apple Intelligence sie strukturiert und schön formatiert ausgeben.</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--orange-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">💭 Ungewiss</div>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--amber-surface); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">💭 Ungewiss</div>
                 </div>
-                <div class="feature-card" style="border: 2px solid var(--orange-primary); opacity: 0.8;">
-                    <div class="feature-icon" style="background: var(--orange-tint);">💬</div>
+                <div class="feature-card" style="border: 2px solid var(--amber-primary); opacity: 0.8;">
+                    <div class="feature-icon" style="background: var(--amber-surface);">💬</div>
                     <h3 data-i18n="roadmap.chatgpt.title">ChatGPT/Claude Integration</h3>
                     <p data-i18n="roadmap.chatgpt.desc">Vielleicht: Diktiere oder beschreibe Listen und Checklisten. KI-Assistenten packen deine Gedanken automatisch in die richtige Form.</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--orange-tint); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">💭 Ungewiss</div>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: var(--amber-surface); border-radius: 8px; display: inline-block; font-size: 0.9rem; font-weight: 600;">💭 Ungewiss</div>
                 </div>
             </div>
         </div>
@@ -1366,7 +1339,12 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Kontakt',
                 'footer.updates': 'Updates',
-                'animatedTexts': ['Zeit<br>zum Wachsen', 'Raum<br>zum Atmen', 'Freiheit<br>zu Reifen', 'Ruhe<br>zum Entstehen']
+                'animatedTexts': [
+                    '<span style="color: #A78BFA">Zeit<br>zum Wachsen</span>',
+                    '<span style="color: #60A5FA">Raum<br>zum Atmen</span>',
+                    '<span style="color: #FBBF24">Freiheit<br>zu Reifen</span>',
+                    '<span style="color: #10B981">Ruhe<br>zum Entstehen</span>'
+                ]
             },
             en: {
                 'nav.features': 'Features',
@@ -1395,7 +1373,12 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Contact',
                 'footer.updates': 'Updates',
-                'animatedTexts': ['Time<br>to Grow', 'Space<br>to Breathe', 'Freedom<br>to Mature', 'Peace<br>to Emerge']
+                'animatedTexts': [
+                    '<span style="color: #A78BFA">Time<br>to Grow</span>',
+                    '<span style="color: #60A5FA">Space<br>to Breathe</span>',
+                    '<span style="color: #FBBF24">Freedom<br>to Mature</span>',
+                    '<span style="color: #10B981">Peace<br>to Emerge</span>'
+                ]
             },
             fr: {
                 'nav.features': 'Fonctionnalités',
@@ -1424,7 +1407,12 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Contact',
                 'footer.updates': 'Mises à jour',
-                'animatedTexts': ['Temps<br>de Croître', 'Espace<br>pour Respirer', 'Liberté<br>de Mûrir', 'Calme<br>pour Naître']
+                'animatedTexts': [
+                    '<span style="color: #A78BFA">Temps<br>de Croître</span>',
+                    '<span style="color: #60A5FA">Espace<br>pour Respirer</span>',
+                    '<span style="color: #FBBF24">Liberté<br>de Mûrir</span>',
+                    '<span style="color: #10B981">Calme<br>pour Naître</span>'
+                ]
             }
         };
 
@@ -1615,9 +1603,9 @@
                 const windowHeight = window.innerHeight;
 
                 // Define three phases:
-                // 1. Entry: scroll until text is centered (0 - 20%)
-                // 2. Lock & Reveal: text is locked, revealing happens (20% - 80%)
-                // 3. Exit: text revealed, can scroll away (80% - 100%)
+                // 1. Entry: scroll until text is centered (0 - 15%)
+                // 2. Lock & Reveal: text is locked, revealing happens (15% - 85%)
+                // 3. Exit: text revealed, can scroll away (85% - 100%)
 
                 const rawProgress = Math.max(0, Math.min(1,
                     (windowHeight / 2 - sectionTop) / sectionHeight
@@ -1625,12 +1613,12 @@
 
                 let revealProgress = 0;
 
-                if (rawProgress < 0.2) {
-                    // Entry phase - not revealing yet
+                if (rawProgress < 0.15) {
+                    // Entry phase - not revealing yet, ALL text gray
                     revealProgress = 0;
-                } else if (rawProgress >= 0.2 && rawProgress <= 0.8) {
+                } else if (rawProgress >= 0.15 && rawProgress <= 0.85) {
                     // Lock & Reveal phase - smoothly reveal from 0 to 1
-                    revealProgress = (rawProgress - 0.2) / 0.6; // Maps 0.2-0.8 to 0-1
+                    revealProgress = (rawProgress - 0.15) / 0.7; // Maps 0.15-0.85 to 0-1
                 } else {
                     // Exit phase - fully revealed
                     revealProgress = 1;
