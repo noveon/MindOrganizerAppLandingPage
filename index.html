@@ -18,43 +18,46 @@
         }
 
         :root {
-            /* Enhanced Brand Colors - More Professional Structure */
-            --bg-dark: #0A0E13;
+            /* Base Canvas */
+            --bg-dark: #0A0A0B;
             --bg-darker: #060809;
             --surface-dark: #151820;
             --surface-light: #1E2229;
 
-            /* Primary Brand Gradient */
-            --brand-gradient: linear-gradient(135deg, #34D399 0%, #3B82F6 100%);
+            /* Premium Phase Colors - Dark Mode Optimized */
 
-            /* Phase Colors - Refined and More Cohesive */
-            --green-primary: #34D399;
-            --green-secondary: #10B981;
-            --green-surface: #0D3F33;
-            --green-tint: #0A2F26;
+            /* Sammeln - Emerald Green */
+            --green-primary: #10B981;
+            --green-surface: #064E3B;
+            --green-surface-deep: #065F46;
+            --green-light: #6EE7B7;
 
-            --orange-primary: #F59E0B;
-            --orange-secondary: #D97706;
-            --orange-surface: #4A3018;
-            --orange-tint: #332110;
+            /* Überlegen - Warm Amber */
+            --amber-primary: #FBBF24;
+            --amber-surface: #78350F;
+            --amber-surface-deep: #92400E;
+            --amber-light: #FCD34D;
 
-            --pink-primary: #EC4899;
-            --pink-secondary: #DB2777;
-            --pink-surface: #3D1E2F;
-            --pink-tint: #2A1520;
-
-            --blue-primary: #3B82F6;
-            --blue-secondary: #2563EB;
-            --blue-surface: #1A2F52;
-            --blue-tint: #12223D;
-
+            /* Recherchieren - Deep Purple */
             --purple-primary: #A78BFA;
-            --purple-surface: #2E1F47;
-            --purple-tint: #1F1530;
+            --purple-surface: #4C1D95;
+            --purple-surface-deep: #5B21B6;
+            --purple-light: #C4B5FD;
 
-            --gray-primary: #9CA3AF;
-            --gray-surface: #374151;
-            --gray-tint: #1F2937;
+            /* Umsetzen - Vibrant Blue */
+            --blue-primary: #60A5FA;
+            --blue-surface: #1E3A8A;
+            --blue-surface-deep: #1E40AF;
+            --blue-light: #93C5FD;
+
+            /* Erledigt - Cool Slate */
+            --slate-primary: #94A3B8;
+            --slate-surface: #1E293B;
+            --slate-surface-deep: #334155;
+            --slate-light: #CBD5E1;
+
+            /* Brand Gradient */
+            --brand-gradient: linear-gradient(135deg, #10B981 0%, #60A5FA 100%);
 
             /* Text Colors - Enhanced Hierarchy */
             --text-primary: #F9FAFB;
@@ -63,8 +66,8 @@
             --text-muted: #6B7280;
 
             /* Accent & Highlights */
-            --accent-glow: rgba(52, 211, 153, 0.2);
-            --accent-glow-strong: rgba(52, 211, 153, 0.4);
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --accent-glow-strong: rgba(16, 185, 129, 0.4);
 
             /* Spacing */
             --section-padding: clamp(80px, 10vw, 160px);
@@ -83,43 +86,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             font-weight: 400;
-            position: relative;
-        }
-
-        /* Animated background gradient */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at 10% 20%, rgba(52, 211, 153, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.02) 0%, transparent 50%);
-            animation: gentleMove 30s ease-in-out infinite;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        @keyframes gentleMove {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-                opacity: 1;
-            }
-            25% {
-                transform: translate(20px, -20px) rotate(1deg);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translate(-20px, 20px) rotate(-1deg);
-                opacity: 1;
-            }
-            75% {
-                transform: translate(-10px, -10px) rotate(0.5deg);
-                opacity: 0.9;
-            }
         }
 
         /* Enhanced Typography - Clean & Professional */
@@ -290,25 +256,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            opacity: 0.12;
+            opacity: 0.08;
             background: radial-gradient(circle at 20% 50%, var(--green-primary) 0%, transparent 50%),
                         radial-gradient(circle at 80% 80%, var(--blue-primary) 0%, transparent 50%),
-                        radial-gradient(circle at 50% 20%, var(--pink-primary) 0%, transparent 50%);
+                        radial-gradient(circle at 50% 20%, var(--purple-primary) 0%, transparent 50%);
             filter: blur(100px);
             z-index: -1;
-            animation: backgroundFloat 20s ease-in-out infinite;
-        }
-
-        @keyframes backgroundFloat {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            33% {
-                transform: translate(-50px, 30px) scale(1.1);
-            }
-            66% {
-                transform: translate(50px, -30px) scale(0.95);
-            }
         }
 
         .hero-content {
@@ -414,11 +367,11 @@
             border-radius: 40px;
             padding: 10px;
             box-shadow: var(--shadow-lg),
-                        0 0 80px rgba(52, 211, 153, 0.1),
-                        inset 0 0 60px rgba(52, 211, 153, 0.05);
+                        0 0 80px rgba(16, 185, 129, 0.1),
+                        inset 0 0 60px rgba(16, 185, 129, 0.05);
             left: 50%;
             transform: translateX(-50%);
-            border: 1px solid rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.1);
         }
 
         .phone-screen {
@@ -455,21 +408,21 @@
             animation-delay: 0.2s; 
             border-left: 3px solid var(--green-primary);
         }
-        .demo-phase:nth-child(2) { 
-            animation-delay: 0.4s; 
-            border-left: 3px solid var(--orange-primary);
+        .demo-phase:nth-child(2) {
+            animation-delay: 0.4s;
+            border-left: 3px solid var(--amber-primary);
         }
-        .demo-phase:nth-child(3) { 
-            animation-delay: 0.6s; 
-            border-left: 3px solid var(--pink-primary);
+        .demo-phase:nth-child(3) {
+            animation-delay: 0.6s;
+            border-left: 3px solid var(--purple-primary);
         }
-        .demo-phase:nth-child(4) { 
-            animation-delay: 0.8s; 
+        .demo-phase:nth-child(4) {
+            animation-delay: 0.8s;
             border-left: 3px solid var(--blue-primary);
         }
-        .demo-phase:nth-child(5) { 
-            animation-delay: 1s; 
-            border-left: 3px solid var(--gray-primary);
+        .demo-phase:nth-child(5) {
+            animation-delay: 1s;
+            border-left: 3px solid var(--slate-primary);
         }
 
         .demo-phase-title {
@@ -548,10 +501,10 @@
             z-index: 2;
         }
 
-        .phase-card.orange::before { background: var(--orange-primary); }
-        .phase-card.pink::before { background: var(--pink-primary); }
+        .phase-card.amber::before { background: var(--amber-primary); }
+        .phase-card.purple::before { background: var(--purple-primary); }
         .phase-card.blue::before { background: var(--blue-primary); }
-        .phase-card.gray::before { background: var(--gray-primary); }
+        .phase-card.slate::before { background: var(--slate-primary); }
 
         /* Color wave animation - ONE smooth cloud flowing through */
         .phases-grid::before {
@@ -562,10 +515,10 @@
             width: 200%;
             height: 100%;
             background: radial-gradient(ellipse 600px 100% at 30% 50%,
-                rgba(52, 211, 153, 0.15) 0%,
-                rgba(245, 158, 11, 0.12) 25%,
-                rgba(236, 72, 153, 0.12) 50%,
-                rgba(59, 130, 246, 0.15) 75%,
+                rgba(16, 185, 129, 0.15) 0%,
+                rgba(251, 191, 36, 0.12) 25%,
+                rgba(167, 139, 250, 0.12) 50%,
+                rgba(96, 165, 250, 0.15) 75%,
                 transparent 100%
             );
             filter: blur(40px);
@@ -603,30 +556,30 @@
         }
 
         .phase-card.green:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(52, 211, 153, 0.2);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(16, 185, 129, 0.25);
         }
 
-        .phase-card.orange:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(245, 158, 11, 0.2);
+        .phase-card.amber:hover {
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(251, 191, 36, 0.25);
         }
 
-        .phase-card.pink:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(236, 72, 153, 0.2);
+        .phase-card.purple:hover {
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(167, 139, 250, 0.25);
         }
 
         .phase-card.blue:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(59, 130, 246, 0.2);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(96, 165, 250, 0.25);
         }
 
-        .phase-card.gray:hover {
-            box-shadow: var(--shadow-lg), 0 0 40px rgba(156, 163, 175, 0.15);
+        .phase-card.slate:hover {
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(148, 163, 184, 0.2);
         }
 
         .phase-icon {
             width: 60px;
             height: 60px;
             margin: 0 auto 20px;
-            background: var(--green-tint);
+            background: var(--green-surface);
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -634,10 +587,10 @@
             font-size: 24px;
         }
 
-        .phase-card.orange .phase-icon { background: var(--orange-tint); }
-        .phase-card.pink .phase-icon { background: var(--pink-tint); }
-        .phase-card.blue .phase-icon { background: var(--blue-tint); }
-        .phase-card.gray .phase-icon { background: var(--gray-tint); }
+        .phase-card.amber .phase-icon { background: var(--amber-surface); }
+        .phase-card.purple .phase-icon { background: var(--purple-surface); }
+        .phase-card.blue .phase-icon { background: var(--blue-surface); }
+        .phase-card.slate .phase-icon { background: var(--slate-surface); }
 
         .phase-card h3 {
             font-size: 1.25rem;
@@ -688,7 +641,7 @@
 
         .highlight-text .word.highlighted {
             color: var(--text-primary);
-            text-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
         }
 
         .story-visual {
@@ -743,18 +696,14 @@
             background: var(--surface-dark);
             border-radius: 20px;
             padding: 40px;
-            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
         }
 
         .feature-card:hover {
             transform: translateY(-8px);
-            box-shadow: var(--shadow-lg), var(--shadow-glow);
-            border: 1px solid rgba(52, 211, 153, 0.2);
-        }
-
-        .feature-card {
-            border: 1px solid transparent;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(16, 185, 129, 0.2);
         }
 
         .feature-icon {
@@ -1078,13 +1027,13 @@
 
         .reveal-text .line.revealed {
             color: var(--text-primary);
-            text-shadow: 0 0 30px rgba(52, 211, 153, 0.1);
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
             font-weight: 500;
         }
 
         .reveal-text .line.fully-revealed {
             color: var(--text-primary);
-            text-shadow: 0 0 40px rgba(52, 211, 153, 0.2);
+            text-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
             font-weight: 600;
         }
 
@@ -1176,12 +1125,12 @@
                     <h3>Sammeln</h3>
                     <p>Halte spontane Einfälle fest, ohne sie bewerten zu müssen</p>
                 </div>
-                <div class="phase-card orange">
+                <div class="phase-card amber">
                     <div class="phase-icon">🤔</div>
                     <h3>Überlegen</h3>
                     <p>Aus der Idee wird eine Absicht – mit Kriterien und Zielen</p>
                 </div>
-                <div class="phase-card pink">
+                <div class="phase-card purple">
                     <div class="phase-icon">🔍</div>
                     <h3>Recherchieren</h3>
                     <p>Sammle Informationen, Links, Bilder und Notizen</p>
@@ -1191,7 +1140,7 @@
                     <h3>Umsetzen</h3>
                     <p>Verwandle deine Recherche in konkrete Aufgaben</p>
                 </div>
-                <div class="phase-card gray">
+                <div class="phase-card slate">
                     <div class="phase-icon">🎯</div>
                     <h3>Erledigt</h3>
                     <p>Behalte den Überblick über abgeschlossene Projekte</p>
