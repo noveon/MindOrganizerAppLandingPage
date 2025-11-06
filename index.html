@@ -480,11 +480,12 @@
             border-radius: 20px;
             padding: 40px 30px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
         }
 
+        /* Top border for phase cards */
         .phase-card::before {
             content: '';
             position: absolute;
@@ -493,12 +494,59 @@
             right: 0;
             height: 4px;
             background: var(--green-primary);
+            z-index: 2;
         }
 
         .phase-card.orange::before { background: var(--orange-primary); }
         .phase-card.pink::before { background: var(--pink-primary); }
         .phase-card.blue::before { background: var(--blue-primary); }
         .phase-card.gray::before { background: var(--gray-primary); }
+
+        /* Color wave animation - flows through all cards */
+        .phase-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--green-primary) 20%,
+                var(--orange-primary) 40%,
+                var(--pink-primary) 60%,
+                var(--blue-primary) 80%,
+                transparent 100%
+            );
+            opacity: 0.08;
+            animation: colorWave 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes colorWave {
+            0% {
+                left: -100%;
+            }
+            50% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Stagger the animation for each card */
+        .phase-card:nth-child(1)::after { animation-delay: 0s; }
+        .phase-card:nth-child(2)::after { animation-delay: 0.4s; }
+        .phase-card:nth-child(3)::after { animation-delay: 0.8s; }
+        .phase-card:nth-child(4)::after { animation-delay: 1.2s; }
+        .phase-card:nth-child(5)::after { animation-delay: 1.6s; }
+
+        /* Ensure content is above the wave */
+        .phase-card > * {
+            position: relative;
+            z-index: 2;
+        }
 
         .phase-card:hover {
             transform: translateY(-8px);
@@ -941,7 +989,7 @@
 
         /* ===== PARALLAX TEXT REVEAL SECTION ===== */
         .parallax-text-reveal {
-            min-height: 300vh;
+            min-height: 400vh;
             position: relative;
             display: flex;
             align-items: center;
@@ -971,8 +1019,11 @@
 
         .reveal-text .line {
             display: inline;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: color 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                        font-weight 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                        text-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             color: var(--gray-surface);
+            will-change: color, font-weight;
         }
 
         .reveal-text .line.revealed {
@@ -1589,7 +1640,7 @@
             observer.observe(card);
         });
 
-        // ===== PARALLAX TEXT REVEAL EFFECT =====
+        // ===== PARALLAX TEXT REVEAL EFFECT WITH SMOOTH LOCK =====
         function setupParallaxTextReveal() {
             const revealSection = document.querySelector('.parallax-text-reveal');
             const lines = document.querySelectorAll('.reveal-text .line');
@@ -1602,26 +1653,47 @@
                 const sectionHeight = sectionRect.height;
                 const windowHeight = window.innerHeight;
 
-                // Calculate scroll progress through the section (0 to 1)
-                const scrollProgress = Math.max(0, Math.min(1,
-                    (windowHeight - sectionTop) / (windowHeight + sectionHeight)
+                // Define three phases:
+                // 1. Entry: scroll until text is centered (0 - 25%)
+                // 2. Lock & Reveal: text is locked, revealing happens (25% - 75%)
+                // 3. Exit: text revealed, can scroll away (75% - 100%)
+
+                const rawProgress = Math.max(0, Math.min(1,
+                    (windowHeight / 2 - sectionTop) / sectionHeight
                 ));
 
-                // Reveal lines based on scroll progress
+                let revealProgress = 0;
+
+                if (rawProgress < 0.25) {
+                    // Entry phase - not revealing yet
+                    revealProgress = 0;
+                } else if (rawProgress >= 0.25 && rawProgress <= 0.75) {
+                    // Lock & Reveal phase - smoothly reveal from 0 to 1
+                    revealProgress = (rawProgress - 0.25) / 0.5; // Maps 0.25-0.75 to 0-1
+                } else {
+                    // Exit phase - fully revealed
+                    revealProgress = 1;
+                }
+
+                // Apply smooth reveal with easing
                 const totalLines = lines.length;
-                const linesToReveal = Math.floor(scrollProgress * totalLines * 1.2); // 1.2 for smoother reveal
+                const easedProgress = revealProgress; // Already smooth from scroll
 
                 lines.forEach((line, index) => {
-                    if (index < linesToReveal) {
+                    const lineProgress = index / (totalLines - 1); // 0 to 1 for each line
+                    const revealThreshold = lineProgress - 0.1; // Start revealing slightly before
+                    const fullyRevealedThreshold = lineProgress - 0.2; // Fully revealed earlier
+
+                    if (easedProgress > revealThreshold) {
                         line.classList.add('revealed');
-                        // Add fully-revealed class to lines well past
-                        if (index < linesToReveal - 3) {
-                            line.classList.add('fully-revealed');
-                        } else {
-                            line.classList.remove('fully-revealed');
-                        }
                     } else {
-                        line.classList.remove('revealed', 'fully-revealed');
+                        line.classList.remove('revealed');
+                    }
+
+                    if (easedProgress > fullyRevealedThreshold + 0.15) {
+                        line.classList.add('fully-revealed');
+                    } else {
+                        line.classList.remove('fully-revealed');
                     }
                 });
             });
@@ -1631,8 +1703,6 @@
         function setupEnhancedParallax() {
             const heroBackground = document.querySelector('.hero-background');
             const phoneVisual = document.querySelector('.phone-mockup');
-            const phaseCards = document.querySelectorAll('.phase-card');
-            const featureCards = document.querySelectorAll('.feature-card');
 
             window.addEventListener('scroll', () => {
                 const scrolled = window.pageYOffset;
@@ -1646,15 +1716,6 @@
                 if (phoneVisual && scrolled < 800) {
                     phoneVisual.style.transform = `translateX(-50%) translateY(${scrolled * 0.3}px) rotateY(${scrolled * 0.02}deg) rotateX(${scrolled * -0.01}deg)`;
                 }
-
-                // Phase cards subtle parallax on hover position
-                phaseCards.forEach((card, index) => {
-                    const rect = card.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        const offset = (scrolled - card.offsetTop) * 0.1;
-                        card.style.transform = `translateY(${offset}px)`;
-                    }
-                });
             });
         }
 
