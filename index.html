@@ -476,7 +476,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
-            position: relative;
         }
 
         .phase-card {
@@ -505,44 +504,6 @@
         .phase-card.purple::before { background: var(--purple-primary); }
         .phase-card.blue::before { background: var(--blue-primary); }
         .phase-card.slate::before { background: var(--slate-primary); }
-
-        /* Color wave animation - ONE smooth cloud flowing through */
-        .phases-grid::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background: radial-gradient(ellipse 600px 100% at 30% 50%,
-                rgba(16, 185, 129, 0.15) 0%,
-                rgba(251, 191, 36, 0.12) 25%,
-                rgba(167, 139, 250, 0.12) 50%,
-                rgba(96, 165, 250, 0.15) 75%,
-                transparent 100%
-            );
-            filter: blur(40px);
-            animation: smoothWave 12s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes smoothWave {
-            0% {
-                transform: translateX(-50%);
-                opacity: 0;
-            }
-            5% {
-                opacity: 1;
-            }
-            95% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(50%);
-                opacity: 0;
-            }
-        }
 
         /* Ensure content is above the wave */
         .phase-card > * {
@@ -745,14 +706,15 @@
             border-radius: 20px;
             padding: 30px;
             text-align: center;
-            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: pointer;
+            position: relative;
         }
 
         .content-card:hover {
-            transform: translateY(-5px);
-            background: var(--surface-light);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(16, 185, 129, 0.2);
         }
 
         .content-icon {
@@ -1021,12 +983,12 @@
             transition: color 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                         font-weight 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                         text-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            color: var(--gray-surface);
+            color: #2A2A2C;
             will-change: color, font-weight;
         }
 
         .reveal-text .line.revealed {
-            color: var(--text-primary);
+            color: #D1D5DB;
             text-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
             font-weight: 500;
         }
