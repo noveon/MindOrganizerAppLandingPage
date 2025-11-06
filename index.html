@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -18,47 +18,76 @@
         }
 
         :root {
-            /* Brand Colors from Palette */
-            --bg-dark: #0E1116;
-            --bg-darker: #0B0B0C;
-            --surface-dark: #1C1C1E;
-            
-            /* Phase Colors */
+            /* Enhanced Brand Colors - More Professional Structure */
+            --bg-dark: #0A0E13;
+            --bg-darker: #060809;
+            --surface-dark: #151820;
+            --surface-light: #1E2229;
+
+            /* Primary Brand Gradient */
+            --brand-gradient: linear-gradient(135deg, #34D399 0%, #3B82F6 100%);
+
+            /* Phase Colors - Refined and More Cohesive */
             --green-primary: #34D399;
-            --green-surface: #165545;
-            --green-tint: #12453A;
-            
-            --orange-primary: #FB923C;
-            --orange-surface: #6B4520;
-            --orange-tint: #4A3518;
-            
+            --green-secondary: #10B981;
+            --green-surface: #0D3F33;
+            --green-tint: #0A2F26;
+
+            --orange-primary: #F59E0B;
+            --orange-secondary: #D97706;
+            --orange-surface: #4A3018;
+            --orange-tint: #332110;
+
             --pink-primary: #EC4899;
-            --pink-surface: #4D2538;
-            --pink-tint: #3D1E2F;
-            
+            --pink-secondary: #DB2777;
+            --pink-surface: #3D1E2F;
+            --pink-tint: #2A1520;
+
             --blue-primary: #3B82F6;
-            --blue-surface: #1E3A6B;
-            --blue-tint: #1A2F52;
-            
-            --gray-primary: #A1A9B5;
-            --gray-surface: #454B54;
-            --gray-tint: #30343B;
-            
-            /* Text Colors */
-            --text-primary: #EAEAEA;
-            --text-secondary: #B8BDC6;
-            --text-tertiary: #94A3B8;
-            
+            --blue-secondary: #2563EB;
+            --blue-surface: #1A2F52;
+            --blue-tint: #12223D;
+
+            --purple-primary: #A78BFA;
+            --purple-surface: #2E1F47;
+            --purple-tint: #1F1530;
+
+            --gray-primary: #9CA3AF;
+            --gray-surface: #374151;
+            --gray-tint: #1F2937;
+
+            /* Text Colors - Enhanced Hierarchy */
+            --text-primary: #F9FAFB;
+            --text-secondary: #D1D5DB;
+            --text-tertiary: #9CA3AF;
+            --text-muted: #6B7280;
+
+            /* Accent & Highlights */
+            --accent-glow: rgba(52, 211, 153, 0.2);
+            --accent-glow-strong: rgba(52, 211, 153, 0.4);
+
             /* Spacing */
             --section-padding: clamp(80px, 10vw, 160px);
+
+            /* Shadows - Professional depth */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 40px var(--accent-glow);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Enhanced Typography */
+        h1, h2, h3 {
+            font-family: 'Fraunces', 'Space Grotesk', serif;
+            font-weight: 700;
         }
 
         /* Smooth Scrolling */
@@ -186,7 +215,7 @@
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(52, 211, 153, 0.3);
+            box-shadow: var(--shadow-glow), var(--shadow-md);
         }
 
         /* Hero Section */
@@ -232,24 +261,45 @@
             background-clip: text;
         }
 
-        /* Animated Text Effect */
+        /* Animated Text Effect - Improved Slide Animation */
         .animated-text {
             display: inline-block;
             background: linear-gradient(135deg, var(--green-primary), var(--blue-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeIn 0.5s ease-in-out;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
-        @keyframes fadeIn {
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(30px);
+                filter: blur(4px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Slide out animation */
+        .animated-text.slide-out {
+            animation: slideOut 0.4s cubic-bezier(0.6, 0, 0.84, 0);
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-30px);
+                filter: blur(4px);
             }
         }
 
@@ -295,9 +345,12 @@
             background: var(--surface-dark);
             border-radius: 40px;
             padding: 10px;
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+            box-shadow: var(--shadow-lg),
+                        0 0 80px rgba(52, 211, 153, 0.1),
+                        inset 0 0 60px rgba(52, 211, 153, 0.05);
             left: 50%;
             transform: translateX(-50%);
+            border: 1px solid rgba(52, 211, 153, 0.1);
         }
 
         .phone-screen {
@@ -430,8 +483,28 @@
         .phase-card.gray::before { background: var(--gray-primary); }
 
         .phase-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .phase-card.green:hover {
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(52, 211, 153, 0.2);
+        }
+
+        .phase-card.orange:hover {
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(245, 158, 11, 0.2);
+        }
+
+        .phase-card.pink:hover {
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(236, 72, 153, 0.2);
+        }
+
+        .phase-card.blue:hover {
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .phase-card.gray:hover {
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(156, 163, 175, 0.15);
         }
 
         .phase-icon {
@@ -559,8 +632,14 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border: 1px solid rgba(52, 211, 153, 0.2);
+        }
+
+        .feature-card {
+            border: 1px solid transparent;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .feature-icon {
@@ -840,6 +919,56 @@
             border-radius: 8px;
             animation: pulse 1.5s ease-in-out infinite;
         }
+
+        /* ===== PARALLAX TEXT REVEAL SECTION ===== */
+        .parallax-text-reveal {
+            min-height: 200vh;
+            padding: 20vh 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reveal-text-container {
+            position: sticky;
+            top: 25vh;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .reveal-text {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            line-height: 1.8;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .reveal-text .line {
+            display: block;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--gray-surface);
+        }
+
+        .reveal-text .line.revealed {
+            color: var(--text-primary);
+            text-shadow: 0 0 40px rgba(52, 211, 153, 0.15);
+        }
+
+        .reveal-text .line.fully-revealed {
+            color: var(--text-primary);
+            text-shadow: 0 0 60px rgba(52, 211, 153, 0.3);
+        }
+
+        /* Grid showcase for content types - improved */
+        .content-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
     </style>
 </head>
 <body>
@@ -941,6 +1070,32 @@
                     <h3>Erledigt</h3>
                     <p>Behalte den Überblick über abgeschlossene Projekte</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Text Reveal Section -->
+    <section class="parallax-text-reveal">
+        <div class="reveal-text-container">
+            <div class="reveal-text" id="reveal-text">
+                <span class="line">Manchmal ist es nur ein Gedanke.</span>
+                <span class="line">Du gehst eine Straße entlang, ein Fahrrad rauscht vorbei –</span>
+                <span class="line">und plötzlich fragst du dich: „Wäre ein eigenes schön?"</span>
+                <span class="line">In MindOrganizer hältst du diesen Moment fest.</span>
+                <span class="line">Ohne Bewertung. Kein To-do, keine Pflicht. Nur ein Impuls.</span>
+                <span class="line">Nach ein paar Tagen fragt die App leise:</span>
+                <span class="line">„Ist der Gedanke noch da – oder darf er gehen?"</span>
+                <span class="line">Wenn er bleibt, wächst er behutsam.</span>
+                <span class="line">Du fügst kleine Bausteine hinzu:</span>
+                <span class="line">eine Überschrift, ein paar Kriterien, ein Foto aus dem Laden,</span>
+                <span class="line">einen Link, eine kurze Sprachnotiz.</span>
+                <span class="line">Schritt für Schritt wird aus „vielleicht" ein Plan.</span>
+                <span class="line">MindOrganizer ist keine klassische To-Do- oder Notizen-App.</span>
+                <span class="line">Es ist ein Raum, in dem Ideen atmen dürfen,</span>
+                <span class="line">bis sie klar genug sind, Wirklichkeit zu werden.</span>
+                <span class="line">Und irgendwann stehst du vor deinem Fahrrad.</span>
+                <span class="line">Nicht, weil eine Liste dich trieb –</span>
+                <span class="line">sondern weil ein Gedanke Zeit bekam.</span>
             </div>
         </div>
     </section>
@@ -1049,6 +1204,11 @@
                     <div class="content-icon">📑</div>
                     <h4>Überschriften</h4>
                     <p>Strukturiere längere Gedanken</p>
+                </div>
+                <div class="content-card" style="border: 2px solid var(--green-primary);">
+                    <div class="content-icon">☑️</div>
+                    <h4>Checklisten</h4>
+                    <p>To-Dos und Aufgaben zum Abhaken</p>
                 </div>
             </div>
         </div>
@@ -1288,7 +1448,7 @@
             });
         });
 
-        // ===== ANIMATED TEXT IN HERO =====
+        // ===== ANIMATED TEXT IN HERO - IMPROVED WITH SLIDE =====
         let animatedTextIndex = 0;
         let animatedTextInterval;
 
@@ -1302,9 +1462,16 @@
             animatedTextIndex = 0;
 
             animatedTextInterval = setInterval(() => {
-                animatedTextIndex = (animatedTextIndex + 1) % texts.length;
-                animatedTextElement.textContent = texts[animatedTextIndex];
-            }, 3000);
+                // Add slide-out class
+                animatedTextElement.classList.add('slide-out');
+
+                // Wait for slide-out animation, then change text
+                setTimeout(() => {
+                    animatedTextIndex = (animatedTextIndex + 1) % texts.length;
+                    animatedTextElement.textContent = texts[animatedTextIndex];
+                    animatedTextElement.classList.remove('slide-out');
+                }, 400); // Duration of slide-out animation
+            }, 3500); // Slightly longer to allow reading
         }
 
         // ===== PROGRESSIVE TEXT HIGHLIGHT =====
@@ -1414,11 +1581,82 @@
             observer.observe(card);
         });
 
+        // ===== PARALLAX TEXT REVEAL EFFECT =====
+        function setupParallaxTextReveal() {
+            const revealSection = document.querySelector('.parallax-text-reveal');
+            const lines = document.querySelectorAll('.reveal-text .line');
+
+            if (!revealSection || !lines.length) return;
+
+            window.addEventListener('scroll', () => {
+                const sectionRect = revealSection.getBoundingClientRect();
+                const sectionTop = sectionRect.top;
+                const sectionHeight = sectionRect.height;
+                const windowHeight = window.innerHeight;
+
+                // Calculate scroll progress through the section (0 to 1)
+                const scrollProgress = Math.max(0, Math.min(1,
+                    (windowHeight - sectionTop) / (windowHeight + sectionHeight)
+                ));
+
+                // Reveal lines based on scroll progress
+                const totalLines = lines.length;
+                const linesToReveal = Math.floor(scrollProgress * totalLines * 1.2); // 1.2 for smoother reveal
+
+                lines.forEach((line, index) => {
+                    if (index < linesToReveal) {
+                        line.classList.add('revealed');
+                        // Add fully-revealed class to lines well past
+                        if (index < linesToReveal - 3) {
+                            line.classList.add('fully-revealed');
+                        } else {
+                            line.classList.remove('fully-revealed');
+                        }
+                    } else {
+                        line.classList.remove('revealed', 'fully-revealed');
+                    }
+                });
+            });
+        }
+
+        // ===== ENHANCED PARALLAX EFFECTS =====
+        function setupEnhancedParallax() {
+            const heroBackground = document.querySelector('.hero-background');
+            const phoneVisual = document.querySelector('.phone-mockup');
+            const phaseCards = document.querySelectorAll('.phase-card');
+            const featureCards = document.querySelectorAll('.feature-card');
+
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+
+                // Hero background parallax
+                if (heroBackground) {
+                    heroBackground.style.transform = `translateY(${scrolled * 0.5}px) scale(${1 + scrolled * 0.0002})`;
+                }
+
+                // Phone mockup 3D parallax
+                if (phoneVisual && scrolled < 800) {
+                    phoneVisual.style.transform = `translateX(-50%) translateY(${scrolled * 0.3}px) rotateY(${scrolled * 0.02}deg) rotateX(${scrolled * -0.01}deg)`;
+                }
+
+                // Phase cards subtle parallax on hover position
+                phaseCards.forEach((card, index) => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        const offset = (scrolled - card.offsetTop) * 0.1;
+                        card.style.transform = `translateY(${offset}px)`;
+                    }
+                });
+            });
+        }
+
         // ===== INITIALIZE ALL EFFECTS =====
         document.addEventListener('DOMContentLoaded', function() {
             startAnimatedText();
             setupTextHighlight();
             setupParallax();
+            setupParallaxTextReveal();
+            setupEnhancedParallax();
         });
     </script>
 </body>
