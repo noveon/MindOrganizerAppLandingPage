@@ -83,6 +83,43 @@
             line-height: 1.6;
             overflow-x: hidden;
             font-weight: 400;
+            position: relative;
+        }
+
+        /* Animated background gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(52, 211, 153, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.02) 0%, transparent 50%);
+            animation: gentleMove 30s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes gentleMove {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            25% {
+                transform: translate(20px, -20px) rotate(1deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-20px, 20px) rotate(-1deg);
+                opacity: 1;
+            }
+            75% {
+                transform: translate(-10px, -10px) rotate(0.5deg);
+                opacity: 0.9;
+            }
         }
 
         /* Enhanced Typography - Clean & Professional */
@@ -253,12 +290,25 @@
             left: 0;
             right: 0;
             bottom: 0;
-            opacity: 0.1;
+            opacity: 0.12;
             background: radial-gradient(circle at 20% 50%, var(--green-primary) 0%, transparent 50%),
                         radial-gradient(circle at 80% 80%, var(--blue-primary) 0%, transparent 50%),
                         radial-gradient(circle at 50% 20%, var(--pink-primary) 0%, transparent 50%);
             filter: blur(100px);
             z-index: -1;
+            animation: backgroundFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(-50px, 30px) scale(1.1);
+            }
+            66% {
+                transform: translate(50px, -30px) scale(0.95);
+            }
         }
 
         .hero-content {
@@ -473,6 +523,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
+            position: relative;
         }
 
         .phase-card {
@@ -502,45 +553,43 @@
         .phase-card.blue::before { background: var(--blue-primary); }
         .phase-card.gray::before { background: var(--gray-primary); }
 
-        /* Color wave animation - flows through all cards */
-        .phase-card::after {
+        /* Color wave animation - ONE smooth cloud flowing through */
+        .phases-grid::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
+            left: 0;
+            width: 200%;
             height: 100%;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                var(--green-primary) 20%,
-                var(--orange-primary) 40%,
-                var(--pink-primary) 60%,
-                var(--blue-primary) 80%,
+            background: radial-gradient(ellipse 600px 100% at 30% 50%,
+                rgba(52, 211, 153, 0.15) 0%,
+                rgba(245, 158, 11, 0.12) 25%,
+                rgba(236, 72, 153, 0.12) 50%,
+                rgba(59, 130, 246, 0.15) 75%,
                 transparent 100%
             );
-            opacity: 0.08;
-            animation: colorWave 8s ease-in-out infinite;
-            z-index: 1;
+            filter: blur(40px);
+            animation: smoothWave 12s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        @keyframes colorWave {
+        @keyframes smoothWave {
             0% {
-                left: -100%;
+                transform: translateX(-50%);
+                opacity: 0;
             }
-            50% {
-                left: 100%;
+            5% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 1;
             }
             100% {
-                left: 100%;
+                transform: translateX(50%);
+                opacity: 0;
             }
         }
-
-        /* Stagger the animation for each card */
-        .phase-card:nth-child(1)::after { animation-delay: 0s; }
-        .phase-card:nth-child(2)::after { animation-delay: 0.4s; }
-        .phase-card:nth-child(3)::after { animation-delay: 0.8s; }
-        .phase-card:nth-child(4)::after { animation-delay: 1.2s; }
-        .phase-card:nth-child(5)::after { animation-delay: 1.6s; }
 
         /* Ensure content is above the wave */
         .phase-card > * {
@@ -989,11 +1038,12 @@
 
         /* ===== PARALLAX TEXT REVEAL SECTION ===== */
         .parallax-text-reveal {
-            min-height: 400vh;
+            min-height: 250vh;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 10vh 0;
         }
 
         .reveal-text-container {
@@ -1075,7 +1125,7 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Gedanken brauchen <span class="animated-text" id="animated-text">Zeit zum Wachsen</span></h1>
+                    <h1>Gedanken brauchen <br><span class="animated-text" id="animated-text">Zeit zum Wachsen</span></h1>
                     <p data-i18n="hero.subtitle">Manchmal ist es nur ein Gedanke. Ein Fahrrad rauscht vorbei und du fragst dich: "Wäre ein eigenes schön?" MindOrganizer gibt deinen Ideen den Raum, den sie verdienen.</p>
                     <div class="hero-buttons">
                         <a href="#download" class="cta-button" data-i18n="hero.cta">App Downloaden</a>
@@ -1405,7 +1455,7 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Kontakt',
                 'footer.updates': 'Updates',
-                'animatedTexts': ['Zeit zum Wachsen', 'Raum zum Atmen', 'Freiheit zu Reifen', 'Ruhe zum Entstehen']
+                'animatedTexts': ['Zeit<br>zum Wachsen', 'Raum<br>zum Atmen', 'Freiheit<br>zu Reifen', 'Ruhe<br>zum Entstehen']
             },
             en: {
                 'nav.features': 'Features',
@@ -1434,7 +1484,7 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Contact',
                 'footer.updates': 'Updates',
-                'animatedTexts': ['Time to Grow', 'Space to Breathe', 'Freedom to Mature', 'Peace to Emerge']
+                'animatedTexts': ['Time<br>to Grow', 'Space<br>to Breathe', 'Freedom<br>to Mature', 'Peace<br>to Emerge']
             },
             fr: {
                 'nav.features': 'Fonctionnalités',
@@ -1463,7 +1513,7 @@
                 'footer.faq': 'FAQ',
                 'footer.contact': 'Contact',
                 'footer.updates': 'Mises à jour',
-                'animatedTexts': ['Temps de Croître', 'Espace pour Respirer', 'Liberté de Mûrir', 'Calme pour Naître']
+                'animatedTexts': ['Temps<br>de Croître', 'Espace<br>pour Respirer', 'Liberté<br>de Mûrir', 'Calme<br>pour Naître']
             }
         };
 
@@ -1527,7 +1577,7 @@
                 // Wait for slide-out animation, then change text
                 setTimeout(() => {
                     animatedTextIndex = (animatedTextIndex + 1) % texts.length;
-                    animatedTextElement.textContent = texts[animatedTextIndex];
+                    animatedTextElement.innerHTML = texts[animatedTextIndex]; // Use innerHTML for <br> tags
                     animatedTextElement.classList.remove('slide-out');
                 }, 400); // Duration of slide-out animation
             }, 3500); // Slightly longer to allow reading
@@ -1654,9 +1704,9 @@
                 const windowHeight = window.innerHeight;
 
                 // Define three phases:
-                // 1. Entry: scroll until text is centered (0 - 25%)
-                // 2. Lock & Reveal: text is locked, revealing happens (25% - 75%)
-                // 3. Exit: text revealed, can scroll away (75% - 100%)
+                // 1. Entry: scroll until text is centered (0 - 20%)
+                // 2. Lock & Reveal: text is locked, revealing happens (20% - 80%)
+                // 3. Exit: text revealed, can scroll away (80% - 100%)
 
                 const rawProgress = Math.max(0, Math.min(1,
                     (windowHeight / 2 - sectionTop) / sectionHeight
@@ -1664,12 +1714,12 @@
 
                 let revealProgress = 0;
 
-                if (rawProgress < 0.25) {
+                if (rawProgress < 0.2) {
                     // Entry phase - not revealing yet
                     revealProgress = 0;
-                } else if (rawProgress >= 0.25 && rawProgress <= 0.75) {
+                } else if (rawProgress >= 0.2 && rawProgress <= 0.8) {
                     // Lock & Reveal phase - smoothly reveal from 0 to 1
-                    revealProgress = (rawProgress - 0.25) / 0.5; // Maps 0.25-0.75 to 0-1
+                    revealProgress = (rawProgress - 0.2) / 0.6; // Maps 0.2-0.8 to 0-1
                 } else {
                     // Exit phase - fully revealed
                     revealProgress = 1;
