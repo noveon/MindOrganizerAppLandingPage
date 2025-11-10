@@ -1,6 +1,11 @@
-https://phased-app.de/* https://phased-app.com/:splat 301!
-http://phased-app.de/* https://phased-app.com/:splat 301!
-https://www.phased-app.de/* https://phased-app.com/:splat 301!
-http://www.phased-app.de/* https://phased-app.com/:splat 301!
+# --- Redirect .de → .com (mit und ohne www)
+https://phased-app.de/*       https://phased-app.com/:splat   301!
+http://phased-app.de/*        https://phased-app.com/:splat   301!
+https://www.phased-app.de/*   https://phased-app.com/:splat   301!
+http://www.phased-app.de/*    https://phased-app.com/:splat   301!
 
+# --- Ensure robots.txt is accessible (fixes Lighthouse validation)
 /robots.txt   /robots.txt   200!
+
+# --- Force HTTPS for all traffic
+/*   https://phased-app.com/:splat   301!
