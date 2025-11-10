@@ -5,6 +5,22 @@
 # Redirects
 # ==============================
 
+# ==============================
+# MAINTENANCE MODE (Deaktiviert)
+# ==============================
+# Um den Wartungsmodus zu aktivieren:
+# 1. Entferne die # vor [[redirects]], from, to, status und force
+# 2. Commit + Push
+# 3. Alle Besucher sehen dann maintenance.html
+#
+# Um zu deaktivieren: Kommentiere die Zeilen wieder aus (#)
+# ==============================
+# [[redirects]]
+#   from = "/*"
+#   to = "/maintenance.html"
+#   status = 200
+#   force = true
+
 [[redirects]]
   from = "https://phased-app.de/*"
   to = "https://phased-app.com/:splat"
