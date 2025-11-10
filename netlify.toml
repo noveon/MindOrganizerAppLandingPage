@@ -1,7 +1,3 @@
-# ==============================
-# Netlify Configuration for phased-app.com
-# ==============================
-
 [build]
   publish = "."
 
@@ -33,50 +29,48 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "/robots.txt"
-  to = "/robots.txt"
-  status = 200
-  force = true
-
 # ==============================
-# Headers (Order matters: specific paths first!)
+# Headers
 # ==============================
 
-# robots.txt specific headers (BEFORE /* catch-all)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # --- Performance ---
+    Cache-Control = "public, max-age=31536000, immutable"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+    # --- Security / HTTPS ---
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+    # --- Content Security Policy (CSP) ---
+    Content-Security-Policy = '''
+      default-src 'self';
+      img-src 'self' data: https:;
+      script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      connect-src 'self';
+      frame-ancestors 'self';
+      base-uri 'self';
+      form-action 'self';
+    '''
+
+# --- robots.txt ---
 [[headers]]
   for = "/robots.txt"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Content-Type = "text/plain; charset=utf-8"
 
-# sitemap.xml specific headers
+# --- sitemap.xml ---
 [[headers]]
   for = "/sitemap.xml"
   [headers.values]
-    Content-Type = "application/xml; charset=utf-8"
-    Cache-Control = "public, max-age=86400"
-
-# privacy.html specific headers
-[[headers]]
-  for = "/privacy.html"
-  [headers.values]
     Cache-Control = "public, max-age=3600"
-    X-Robots-Tag = "noindex, follow"
-
-# Global headers for all other files
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Cross-Origin-Opener-Policy = "same-origin"
-    Strict-Transport-Security = "max-age=15768000; includeSubDomains; preload"
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# ==============================
-# Security and SEO Optimization Complete
-# ==============================
+    Content-Type = "application/xml; charset=utf-8"
