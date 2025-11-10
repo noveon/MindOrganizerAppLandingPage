@@ -1,1 +1,1 @@
-# MindOrganizerAppLandingPage
+# PhasedAppLandingPage
